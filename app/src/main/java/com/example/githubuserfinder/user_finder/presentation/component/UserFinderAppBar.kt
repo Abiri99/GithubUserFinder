@@ -1,5 +1,17 @@
 package com.example.githubuserfinder.user_finder.presentation.component
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,8 +24,13 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +43,7 @@ import com.example.githubuserfinder.core.debugModifier
 
 private val HEADER_HEIGHT = 72.dp
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun UserFinderAppBar() {
 
@@ -40,6 +58,18 @@ fun UserFinderAppBar() {
      * This field is going to set the search icon's vertical padding relative to the [HEADER_HEIGHT]
      * */
     val searchIconTouchableSpaceVerticalPadding = searchIconTouchableSpacePadding.div(2)
+
+    var isSearchEnabled by remember {
+        mutableStateOf(false)
+    }
+
+    val onSearchIconClicked = {
+        isSearchEnabled = true
+    }
+
+    val onDismissSearchClicked = {
+        isSearchEnabled = false
+    }
 
     Card(
         elevation = 100.dp,
@@ -58,31 +88,72 @@ fun UserFinderAppBar() {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            Text(
-                text = "Find User",
-                style = TextStyles.header,
-            )
+            AnimatedContent(
+                targetState = isSearchEnabled,
+                transitionSpec = {
+                    if (targetState) {
+                        slideInVertically { height -> height } + scaleIn() + fadeIn() with slideOutVertically { height -> -height } + scaleOut() + fadeOut()
+                    } else {
+                        slideInVertically { height -> -height } + scaleIn() + fadeIn() with slideOutVertically { height -> height } + scaleOut() + fadeOut()
+                    }.using(
+                        SizeTransform(clip = false)
+                    )
+                }
+            ) { isUserSearching ->
+                if (isUserSearching) {
+                    // Show TextInput
+                    Text(
+                        text = "Text Input",
+                        style = TextStyles.header,
+                    )
+                } else {
+                    // Show Title
+                    Text(
+                        text = "Github Finder",
+                        style = TextStyles.header,
+                    )
+                }
+            }
 
-            TouchableScale(
-                onClick = {
-                    // TODO: Implement
-                },
-                modifier = Modifier
-                    .requiredSize(HEADER_HEIGHT)
-                    .debugModifier(Modifier.background(Color.White.copy(0.1f)))
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Search,
-                    contentDescription = null,
-                    tint = Color.White,
+            AnimatedContent(
+                targetState = isSearchEnabled,
+                transitionSpec = {
+                    if (isSearchEnabled) {
+                        slideInHorizontally { width -> width } + scaleIn() + fadeIn() with slideOutHorizontally { width -> width } + scaleOut() + fadeOut()
+                    } else {
+                        slideInHorizontally { width -> width } + scaleIn() + fadeIn() with slideOutHorizontally { width -> width } + scaleOut() + fadeOut()
+                    }.using(
+                        SizeTransform(clip = false)
+                    )
+                }
+            ) { isUserSearching ->
+                val iconModifier = Modifier
+                    .padding(
+                        start = searchIconTouchableSpacePadding,
+                        top = searchIconTouchableSpaceVerticalPadding,
+                        bottom = searchIconTouchableSpaceVerticalPadding,
+                    )
+
+                TouchableScale(
+                    onClick = if (isUserSearching) onDismissSearchClicked else onSearchIconClicked,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            start = searchIconTouchableSpacePadding,
-                            top = searchIconTouchableSpaceVerticalPadding,
-                            bottom = searchIconTouchableSpaceVerticalPadding,
-                        ),
-                )
+                        .requiredSize(HEADER_HEIGHT)
+                        .debugModifier(Modifier.background(Color.White.copy(0.1f)))
+                ) {
+                    if (isUserSearching) {
+                        Icon(
+                            imageVector = Icons.Rounded.Close,
+                            contentDescription = null,
+                            modifier = iconModifier,
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Rounded.Search,
+                            contentDescription = null,
+                            modifier = iconModifier,
+                        )
+                    }
+                }
             }
         }
     }
