@@ -7,9 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.with
 import androidx.compose.foundation.background
@@ -25,18 +23,23 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
@@ -48,12 +51,12 @@ import com.example.githubuserfinder.core.TextStyles
 import com.example.githubuserfinder.core.TouchableScale
 import com.example.githubuserfinder.core.debugModifier
 
-private val HEADER_HEIGHT = 72.dp
+private val HEADER_HEIGHT = 84.dp
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun UserFinderAppBar(
-    searchedValue: String,
+    searchedValue: String?,
     onSearchedValueChanged: (String) -> Unit,
 ) {
 
@@ -71,9 +74,13 @@ fun UserFinderAppBar(
      * */
     val searchIconTouchableSpaceVerticalPadding = searchIconTouchableSpacePadding.div(2)
 
-    var isSearchEnabled by remember {
-        mutableStateOf(false)
-    }
+    val (searchInputFocusRequester) = remember { FocusRequester.createRefs() }
+
+    /**
+     * This is a local state, so it doesn't need to be in
+     * the [com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel]
+     * */
+    var isSearchEnabled by remember { mutableStateOf(false) }
 
     val onSearchIconClicked = {
         isSearchEnabled = true
@@ -81,6 +88,14 @@ fun UserFinderAppBar(
 
     val onDismissSearchClicked = {
         isSearchEnabled = false
+    }
+
+    LaunchedEffect(isSearchEnabled) {
+        if (isSearchEnabled) {
+            searchInputFocusRequester.requestFocus()
+        } else {
+            focusManager.clearFocus()
+        }
     }
 
     Card(
@@ -115,11 +130,14 @@ fun UserFinderAppBar(
                 if (isUserSearching) {
                     // Show TextInput
                     TextField(
-                        value = searchedValue,
+                        value = searchedValue ?: "",
                         onValueChange = onSearchedValueChanged,
                         maxLines = 1,
-//                        style = TextStyles.content,
-                        modifier = Modifier.fillMaxHeight().weight(1f),
+                        textStyle = LocalTextStyle.current,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .focusRequester(searchInputFocusRequester),
                         singleLine = true,
                         keyboardActions = KeyboardActions(
                             onDone = {
@@ -130,11 +148,17 @@ fun UserFinderAppBar(
                             keyboardType = KeyboardType.Text,
                             imeAction = ImeAction.Done,
                         ),
+                        colors = TextFieldDefaults.textFieldColors(
+                            textColor = Color.White,
+                            cursorColor = Color.White,
+                            focusedIndicatorColor = Color.White,
+                            unfocusedIndicatorColor = Color.White,
+                        ),
                     )
                 } else {
                     // Show Title
                     Text(
-                        text = "Github Finder",
+                        text = "Github User Finder",
                         style = TextStyles.header,
                     )
                 }
@@ -144,9 +168,9 @@ fun UserFinderAppBar(
                 targetState = isSearchEnabled,
                 transitionSpec = {
                     if (isSearchEnabled) {
-                        slideInHorizontally { width -> width } + scaleIn() + fadeIn() with slideOutHorizontally { width -> width } + scaleOut() + fadeOut()
+                        fadeIn() with fadeOut()
                     } else {
-                        slideInHorizontally { width -> width } + scaleIn() + fadeIn() with slideOutHorizontally { width -> width } + scaleOut() + fadeOut()
+                        fadeIn() with fadeOut()
                     }.using(
                         SizeTransform(clip = false)
                     )

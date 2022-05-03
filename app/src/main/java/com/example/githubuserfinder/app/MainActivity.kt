@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
+import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,9 @@ class MainActivity : ComponentActivity() {
                 composable(
                     route = NavDestinations.UserFinderScreen,
                 ) {
-                    UserFinderScreen()
+                    UserFinderScreen(
+                        viewModel = UserFinderViewModel(),
+                    )
                 }
             }
         }
