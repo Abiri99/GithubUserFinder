@@ -15,14 +15,18 @@ import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
@@ -35,6 +39,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.githubuserfinder.core.TextStyles
@@ -45,7 +52,12 @@ private val HEADER_HEIGHT = 72.dp
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun UserFinderAppBar() {
+fun UserFinderAppBar(
+    searchedValue: String,
+    onSearchedValueChanged: (String) -> Unit,
+) {
+
+    val focusManager = LocalFocusManager.current
 
     val searchIconSize = 24.dp
 
@@ -102,9 +114,22 @@ fun UserFinderAppBar() {
             ) { isUserSearching ->
                 if (isUserSearching) {
                     // Show TextInput
-                    Text(
-                        text = "Text Input",
-                        style = TextStyles.header,
+                    TextField(
+                        value = searchedValue,
+                        onValueChange = onSearchedValueChanged,
+                        maxLines = 1,
+//                        style = TextStyles.content,
+                        modifier = Modifier.fillMaxHeight().weight(1f),
+                        singleLine = true,
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                focusManager.clearFocus()
+                            }
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Done,
+                        ),
                     )
                 } else {
                     // Show Title

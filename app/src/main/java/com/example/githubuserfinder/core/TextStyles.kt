@@ -12,4 +12,10 @@ object TextStyles {
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
     )
+
+    val content = TextStyle(
+        color = Color.White,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal,
+    )
 }

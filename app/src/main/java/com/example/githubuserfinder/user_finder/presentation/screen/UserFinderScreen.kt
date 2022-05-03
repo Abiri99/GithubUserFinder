@@ -18,7 +18,10 @@ fun UserFinderScreen() {
             .debugModifier(Modifier.background(Color.Green.copy(0.1f))),
     ) {
         // App Bar
-        UserFinderAppBar()
+        UserFinderAppBar(
+            searchedValue = "",
+            onSearchedValueChanged = {},
+        )
 
         // Content
         Box(
