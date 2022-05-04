@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
@@ -55,8 +56,8 @@ private val HEADER_HEIGHT = 84.dp
 @OptIn(ExperimentalAnimationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun UserFinderAppBar(
-    searchedValue: String?,
-    onSearchedValueChanged: (String) -> Unit,
+    searchedValue: TextFieldValue,
+    onSearchedValueChanged: (TextFieldValue) -> Unit,
 ) {
 
     val focusManager = LocalFocusManager.current
@@ -129,7 +130,7 @@ fun UserFinderAppBar(
                 if (isUserSearching) {
                     // Show TextInput
                     TextField(
-                        value = searchedValue ?: "",
+                        value = searchedValue,
                         onValueChange = onSearchedValueChanged,
                         maxLines = 1,
                         textStyle = CustomTextStyle.content.copy(

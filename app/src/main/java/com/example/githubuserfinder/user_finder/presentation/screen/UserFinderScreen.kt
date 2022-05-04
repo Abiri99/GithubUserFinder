@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
@@ -37,7 +38,7 @@ fun UserFinderScreen(
 
     val uiState by rememberStateWithLifecycle(stateFlow = viewModel.uiState)
 
-    val onSearchedValueChanged: (String) -> Unit = { value ->
+    val onSearchedValueChanged: (TextFieldValue) -> Unit = { value ->
         viewModel.setSearchText(value)
     }
 
@@ -110,7 +111,7 @@ fun UserFinderScreen(
                 }
                 uiState.searchResult!!.isFailure -> {
                     TouchableScale(onClick = {
-                        viewModel.fetchUsersWhomNameContains(uiState.searchedText!!)
+                        viewModel.fetchUsersWhomNameContains(uiState.searchedText.text)
                     }) {
                         Text(
                             text = Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh,

@@ -1,9 +1,8 @@
 package com.example.githubuserfinder.user_finder.presentation.viewmodel
 
-import android.util.Log
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubuserfinder.BuildConfig
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
 import kotlinx.coroutines.delay
@@ -18,7 +17,7 @@ import kotlinx.coroutines.launch
 private const val TAG = "UserFinderViewModel"
 
 internal data class UserFinderUiState(
-    val searchedText: String? = null,
+    val searchedText: TextFieldValue = TextFieldValue(""),
     val searchResult: Result<GithubSearchResponse>? = null,
     val isSearching: Boolean = false,
 )
@@ -42,7 +41,7 @@ class UserFinderViewModel(
         _uiState
             .distinctUntilChanged { old, new -> old.searchedText == new.searchedText }
             .collectLatest {
-                if (it.searchedText.isNullOrBlank()) {
+                if (it.searchedText.text.isBlank()) {
                     _uiState.emit(
                         _uiState.value.copy(
                             searchResult = null,
@@ -51,7 +50,7 @@ class UserFinderViewModel(
                     )
                 } else {
                     delay(600) // This delay is set, so that the application won't request server on every character user enters
-                    fetchUsersWhomNameContains(it.searchedText)
+                    fetchUsersWhomNameContains(it.searchedText.text)
                 }
             }
     }
@@ -71,10 +70,10 @@ class UserFinderViewModel(
         )
     }
 
-    fun setSearchText(value: String) = viewModelScope.launch {
+    fun setSearchText(value: TextFieldValue) = viewModelScope.launch {
         _uiState.emit(
             _uiState.value.copy(
-                searchedText = value
+                searchedText = value,
             )
         )
     }
