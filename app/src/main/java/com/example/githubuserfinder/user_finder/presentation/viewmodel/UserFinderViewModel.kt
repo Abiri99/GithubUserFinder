@@ -1,5 +1,6 @@
 package com.example.githubuserfinder.user_finder.presentation.viewmodel
 
+import android.util.Log
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -40,9 +41,10 @@ class UserFinderViewModel(
      * to the server. Everytime that searchedText updates, we must
      * cancel the previous job by calling job.cancel()
      * */
-    var fetchUsersJob: Job? = null
+    private var fetchUsersJob: Job? = null
 
     init {
+        Log.d(TAG, "init called: ${_uiState.value}")
         observeSearchedText()
     }
 

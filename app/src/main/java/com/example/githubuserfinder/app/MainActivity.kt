@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.githubuserfinder.core.data.NetworkRequester
 import com.example.githubuserfinder.user_detail.presentation.UserDetailScreen
+import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSourceImpl
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
@@ -24,6 +25,13 @@ class MainActivity : ComponentActivity() {
 
             val networkRequester = NetworkRequester()
 
+            val searchRemoteDataSource: SearchRemoteDataSource =
+                SearchRemoteDataSourceImpl(networkRequester = networkRequester)
+
+            val userFinderViewModel = UserFinderViewModel(
+                searchRemoteDataSource = searchRemoteDataSource,
+            )
+
             NavHost(
                 navController = navController,
                 startDestination = ScreenName.UserFinderScreen,
@@ -33,11 +41,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     UserFinderScreen(
                         navController = navController,
-                        viewModel = UserFinderViewModel(
-                            searchRemoteDataSource = SearchRemoteDataSourceImpl(
-                                networkRequester = networkRequester,
-                            )
-                        ),
+                        viewModel = userFinderViewModel,
                     )
                 }
 
