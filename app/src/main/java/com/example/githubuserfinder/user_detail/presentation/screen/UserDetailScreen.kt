@@ -1,10 +1,11 @@
-package com.example.githubuserfinder.user_detail.presentation
+package com.example.githubuserfinder.user_detail.presentation.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.githubuserfinder.user_detail.presentation.component.UserDetailHeader
 
 @Composable
 fun UserDetailScreen(
@@ -15,5 +16,9 @@ fun UserDetailScreen(
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
+        UserDetailHeader(
+            username = username,
+            onNavigatedBack = { navController.navigateUp() },
+        )
     }
 }

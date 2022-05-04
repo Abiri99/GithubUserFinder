@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.githubuserfinder.core.data.NetworkRequester
-import com.example.githubuserfinder.user_detail.presentation.UserDetailScreen
+import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSourceImpl
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
