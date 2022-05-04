@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.Emoji
+import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.debugModifier
 import com.example.githubuserfinder.core.presentation.rememberStateWithLifecycle
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderAppBar
@@ -49,6 +50,13 @@ fun UserFinderScreen(
             modifier = Modifier.fillMaxSize(),
         ) {
             when {
+                uiState.isSearching -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.requiredSize(48.dp).align(Alignment.Center),
+                        color = Color.Black,
+                        strokeWidth = 4.dp,
+                    )
+                }
                 uiState.searchResult == null -> {
                     Text(
                         text = "Tap the " + Emoji.search + " above and start " + Emoji.eye + " Github users " + Emoji.blackCat,
@@ -64,16 +72,20 @@ fun UserFinderScreen(
                     // TODO: Implement
                 }
                 uiState.searchResult!!.isFailure -> {
-                    // TODO: Implement
+                    TouchableScale(onClick = {
+                        viewModel.fetchUsersWhomNameContains(uiState.searchedText!!)
+                    }) {
+                        Text(
+                            text = Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh,
+                            style = CustomTextStyle.contentLargeSemiBold,
+                            color = Color.Black,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(horizontal = 24.dp),
+                        )
+                    }
                 }
-            }
-
-            if (uiState.isSearching) {
-                CircularProgressIndicator(
-                    modifier = Modifier.requiredSize(48.dp),
-                    color = Color.Black,
-                    strokeWidth = 4.dp,
-                )
             }
         }
     }
