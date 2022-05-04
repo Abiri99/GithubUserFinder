@@ -132,7 +132,9 @@ fun UserFinderAppBar(
                         value = searchedValue ?: "",
                         onValueChange = onSearchedValueChanged,
                         maxLines = 1,
-                        textStyle = CustomTextStyle.content,
+                        textStyle = CustomTextStyle.content.copy(
+                            color = Color.White,
+                        ),
                         modifier = Modifier
                             .fillMaxHeight()
                             .weight(1f)

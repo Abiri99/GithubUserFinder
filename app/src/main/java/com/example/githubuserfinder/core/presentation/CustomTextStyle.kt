@@ -13,8 +13,14 @@ object CustomTextStyle {
         fontWeight = FontWeight.Bold,
     )
 
+    val contentLargeSemiBold = TextStyle(
+        color = Color.Black,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.SemiBold,
+    )
+
     val content = TextStyle(
-        color = Color.White,
+        color = Color.Black,
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,
     )

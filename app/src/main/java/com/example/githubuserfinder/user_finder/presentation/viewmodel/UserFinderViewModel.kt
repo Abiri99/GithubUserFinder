@@ -1,9 +1,9 @@
 package com.example.githubuserfinder.user_finder.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
+import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,8 +15,10 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "UserFinderViewModel"
 
-data class UserFinderUiState(
-    val searchText: String? = null,
+internal data class UserFinderUiState(
+    val searchedText: String? = null,
+    val searchResult: Result<GithubSearchResponse>? = null,
+    val isSearching: Boolean = false,
 )
 
 class UserFinderViewModel(
@@ -24,24 +26,24 @@ class UserFinderViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserFinderUiState())
-    val uiState: StateFlow<UserFinderUiState> = _uiState.stateIn(
+    internal val uiState: StateFlow<UserFinderUiState> = _uiState.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
         UserFinderUiState()
     )
 
     init {
-        observeSearchText()
+        observeSearchedText()
     }
 
-    private fun observeSearchText() = viewModelScope.launch {
+    private fun observeSearchedText() = viewModelScope.launch {
         _uiState
             .filter {
-                !it.searchText.isNullOrBlank()
+                !it.searchedText.isNullOrBlank()
             }
             .collectLatest {
-                delay(300)
-                fetchUsersWhomNameContains(it.searchText!!)
+                delay(600) // This delay is set, so that the application won't request server on every character user enters
+                fetchUsersWhomNameContains(it.searchedText!!)
             }
     }
 
@@ -49,16 +51,18 @@ class UserFinderViewModel(
         val result = searchRemoteDataSource.fetchUsers(query)
         when {
             result.isSuccess -> {
-                Log.d(TAG, "successful response: ${result.getOrNull()?.toString()}")
+                // TODO: Implement
             }
-            result.isFailure -> {}
+            result.isFailure -> {
+                // TODO: Implement
+            }
         }
     }
 
     fun setSearchText(value: String) = viewModelScope.launch {
         _uiState.emit(
             _uiState.value.copy(
-                searchText = value
+                searchedText = value
             )
         )
     }
