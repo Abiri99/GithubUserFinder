@@ -41,17 +41,38 @@ class NetworkRequester {
                 ensureActive()
                 urlConnection = apiUrl.openConnection() as HttpsURLConnection
                 ensureActive()
-                val responseStream: InputStream = BufferedInputStream(urlConnection.inputStream)
-                ensureActive()
-                val responseString = String(responseStream.readBytes(), StandardCharsets.UTF_8)
-                ensureActive()
-                val jsonResponse = JSONObject(responseString)
+                when (urlConnection.responseCode) {
+                    200 -> {
+                        val responseStream: InputStream =
+                            BufferedInputStream(urlConnection.inputStream)
+                        ensureActive()
+                        val responseString =
+                            String(responseStream.readBytes(), StandardCharsets.UTF_8)
+                        ensureActive()
+                        val jsonResponse = JSONObject(responseString)
 
-                if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "server response: $jsonResponse")
+                        if (BuildConfig.DEBUG) {
+                            Log.d(TAG, "server response: $jsonResponse")
+                        }
+
+                        Result.success(successResultMapper(jsonResponse))
+                    }
+                    304 -> {
+                        Result.failure(CustomNetworkException("Not modified!"))
+                    }
+                    404 -> {
+                        Result.failure(CustomNetworkException("Resource not found!"))
+                    }
+                    422 -> {
+                        Result.failure(CustomNetworkException("Validation failed!"))
+                    }
+                    503 -> {
+                        Result.failure(CustomNetworkException("Service unavailable!"))
+                    }
+                    else -> {
+                        Result.failure(CustomNetworkException("Unknown network exception!"))
+                    }
                 }
-
-                Result.success(successResultMapper(jsonResponse))
             } catch (e: MalformedURLException) {
                 // This exception could be throw when creating URL
                 Result.failure(e)

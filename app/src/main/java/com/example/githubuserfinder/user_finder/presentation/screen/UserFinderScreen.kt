@@ -113,8 +113,14 @@ fun UserFinderScreen(
                     TouchableScale(onClick = {
                         viewModel.fetchUsersWhomNameContains(uiState.searchedText.text)
                     }) {
+                        val errorMessage =
+                            if (uiState.searchResult?.exceptionOrNull() != null && uiState.searchResult?.exceptionOrNull()?.message?.isBlank() == false) {
+                                uiState.searchResult!!.exceptionOrNull()!!.message!!
+                            } else {
+                                Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
+                            }
                         Text(
-                            text = Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh,
+                            text = errorMessage,
                             style = CustomTextStyle.contentLargeSemiBold,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
