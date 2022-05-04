@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
@@ -112,8 +111,7 @@ fun UserFinderAppBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+                .fillMaxSize(),
         ) {
             AnimatedContent(
                 targetState = isSearchEnabled,
@@ -125,7 +123,10 @@ fun UserFinderAppBar(
                     }.using(
                         SizeTransform(clip = false)
                     )
-                }
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp),
             ) { isUserSearching ->
                 if (isUserSearching) {
                     // Show TextInput
@@ -138,7 +139,7 @@ fun UserFinderAppBar(
                         ),
                         modifier = Modifier
                             .fillMaxHeight()
-                            .weight(1f)
+                            .padding(bottom = 8.dp)
                             .focusRequester(searchInputFocusRequester),
                         singleLine = true,
                         keyboardActions = KeyboardActions(
@@ -180,15 +181,16 @@ fun UserFinderAppBar(
             ) { isUserSearching ->
                 val iconModifier = Modifier
                     .padding(
-                        start = searchIconTouchableSpacePadding,
+                        start = 24.dp,
                         top = searchIconTouchableSpaceVerticalPadding,
                         bottom = searchIconTouchableSpaceVerticalPadding,
+                        end = 16.dp,
                     )
 
                 TouchableScale(
                     onClick = if (isUserSearching) onDismissSearchClicked else onSearchIconClicked,
                     modifier = Modifier
-                        .requiredSize(HEADER_HEIGHT)
+                        .requiredHeight(HEADER_HEIGHT)
                         .debugModifier(Modifier.background(Color.White.copy(0.1f)))
                 ) {
                     if (isUserSearching) {
