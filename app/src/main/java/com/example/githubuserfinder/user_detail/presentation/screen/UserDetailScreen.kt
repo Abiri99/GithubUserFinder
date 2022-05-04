@@ -139,7 +139,7 @@ fun UserDetailScreen(
                                 .background(Color.White)
                         )
 
-                        UserDetailTableRow(former = "Name: ${data.name}", latter = "")
+                        UserDetailTableRow(former = "Name: ${data.name ?: "-"}", latter = "")
 
                         UserDetailTableRow(
                             former = "Following: ${data.following}",
