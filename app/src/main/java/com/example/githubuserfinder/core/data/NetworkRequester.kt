@@ -2,9 +2,9 @@ package com.example.githubuserfinder.core.data
 
 import android.util.Log
 import com.example.githubuserfinder.BuildConfig
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -32,7 +32,7 @@ class NetworkRequester {
         url: String,
         coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
         successResultMapper: (JSONObject) -> T,
-    ): Result<T>? =
+    ): DataResult<T> =
         withContext(coroutineDispatcher) {
             lateinit var urlConnection: HttpsURLConnection
             try {
@@ -55,35 +55,34 @@ class NetworkRequester {
                             Log.d(TAG, "server response: $jsonResponse")
                         }
 
-                        Result.success(successResultMapper(jsonResponse))
+                        DataResult.Success(successResultMapper(jsonResponse))
                     }
                     304 -> {
-                        Result.failure(CustomNetworkException("Not modified!"))
+                        DataResult.Error(CustomNetworkException("Not modified!"))
                     }
                     404 -> {
-                        Result.failure(CustomNetworkException("Resource not found!"))
+                        DataResult.Error(CustomNetworkException("Resource not found!"))
                     }
                     422 -> {
-                        Result.failure(CustomNetworkException("Validation failed!"))
+                        DataResult.Error(CustomNetworkException("Validation failed!"))
                     }
                     503 -> {
-                        Result.failure(CustomNetworkException("Service unavailable!"))
+                        DataResult.Error(CustomNetworkException("Service unavailable!"))
                     }
                     else -> {
-                        Result.failure(CustomNetworkException("Unknown network exception!"))
+                        DataResult.Error(CustomNetworkException("Unknown network exception!"))
                     }
                 }
             } catch (e: MalformedURLException) {
                 // This exception could be throw when creating URL
-                Result.failure(e)
+                DataResult.Error(e)
             } catch (e: IOException) {
                 // This exception could be thrown when calling `url.openConnection`
-                Result.failure(e)
-            } catch (e: CancellationException) {
-                // This exception could be throw when the coroutine is cancelled
-                null
+                DataResult.Error(e)
             } finally {
-                urlConnection.disconnect()
+                withContext(NonCancellable) {
+                    urlConnection.disconnect()
+                }
             }
         }
 }

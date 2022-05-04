@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.githubuserfinder.app.NavigationDestination
+import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.Emoji
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
@@ -91,8 +92,8 @@ fun UserFinderScreen(
                             .padding(horizontal = 24.dp),
                     )
                 }
-                uiState.searchResult?.isSuccess == true -> {
-                    val result = uiState.searchResult?.getOrNull()
+                uiState.searchResult is DataResult.Success -> {
+                    val result = uiState.searchResult?.value
                     if (result != null && result.items.isNotEmpty()) {
                         LazyVerticalGrid(
                             cells = GridCells.Adaptive(180.dp),
@@ -100,8 +101,8 @@ fun UserFinderScreen(
                             contentPadding = PaddingValues(24.dp),
                             horizontalArrangement = Arrangement.Center,
                         ) {
-                            items(uiState.searchResult?.getOrNull()?.items?.size ?: 0) {
-                                val item = uiState.searchResult!!.getOrNull()!!.items[it]
+                            items(uiState.searchResult?.value?.items?.size ?: 0) {
+                                val item = uiState.searchResult!!.value!!.items[it]
                                 UserFinderListItem(
                                     model = item,
                                     onItemClicked = onItemClicked,
@@ -120,13 +121,13 @@ fun UserFinderScreen(
                         )
                     }
                 }
-                uiState.searchResult!!.isFailure -> {
+                uiState.searchResult is DataResult.Error -> {
                     TouchableScale(onClick = {
                         viewModel.fetchUsersWhomNameContains(uiState.searchedText.text)
                     }) {
                         val errorMessage =
-                            if (uiState.searchResult?.exceptionOrNull() != null && uiState.searchResult?.exceptionOrNull()?.message?.isBlank() == false) {
-                                uiState.searchResult!!.exceptionOrNull()!!.message!!
+                            if (uiState.searchResult?.exception != null && uiState.searchResult?.exception?.message?.isBlank() == false) {
+                                uiState.searchResult!!.exception!!.message!!
                             } else {
                                 Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
                             }

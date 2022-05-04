@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.Emoji
 import com.example.githubuserfinder.core.presentation.component.NetworkImage
@@ -81,8 +82,8 @@ fun UserDetailScreen(
                         strokeWidth = 4.dp,
                     )
                 }
-                uiState.value.userData?.isSuccess == true -> {
-                    val data = uiState.value.userData!!.getOrNull()!!
+                uiState.value.userData is DataResult.Success -> {
+                    val data = uiState.value.userData!!.value!!
 
                     NetworkImage(
                         url = data.avatarUrl,
@@ -185,13 +186,13 @@ fun UserDetailScreen(
                         )
                     }
                 }
-                uiState.value.userData?.isFailure == true -> {
+                uiState.value.userData is DataResult.Error -> {
                     TouchableScale(onClick = {
                         viewModel.fetchUserData(username = username)
                     }) {
                         val errorMessage =
-                            if (uiState.value.userData?.exceptionOrNull() != null && uiState.value.userData?.exceptionOrNull()?.message?.isBlank() == false) {
-                                uiState.value.userData!!.exceptionOrNull()!!.message!!
+                            if (uiState.value.userData?.exception != null && uiState.value.userData?.exception?.message?.isBlank() == false) {
+                                uiState.value.userData!!.exception!!.message!!
                             } else {
                                 Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
                             }

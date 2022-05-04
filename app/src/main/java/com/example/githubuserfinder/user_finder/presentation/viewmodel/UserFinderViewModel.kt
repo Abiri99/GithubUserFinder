@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
 import kotlinx.coroutines.Job
@@ -18,7 +19,7 @@ private const val TAG = "UserFinderViewModel"
 
 data class UserFinderUiState(
     val searchedText: TextFieldValue = TextFieldValue(""),
-    val searchResult: Result<GithubSearchResponse>? = null,
+    val searchResult: DataResult<GithubSearchResponse>? = null,
     val isSearching: Boolean = false,
 )
 
@@ -72,7 +73,7 @@ class UserFinderViewModel(
         )
     }
 
-    fun setSearchResult(value: Result<GithubSearchResponse>?) = viewModelScope.launch {
+    fun setSearchResult(value: DataResult<GithubSearchResponse>?) = viewModelScope.launch {
         uiState.emit(
             uiState.value.copy(
                 searchResult = value,
@@ -93,9 +94,7 @@ class UserFinderViewModel(
         ensureActive()
         val result = searchRemoteDataSource.fetchUsers(query)
         ensureActive()
-        if (result != null) {
-            setSearchResult(result)
-        }
+        setSearchResult(result)
         setIsSearching(false)
     }
 }
