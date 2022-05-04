@@ -21,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.githubuserfinder.app.NavigationDestination
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.Emoji
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
@@ -33,6 +35,7 @@ import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinde
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserFinderScreen(
+    navController: NavController,
     viewModel: UserFinderViewModel,
 ) {
 
@@ -40,6 +43,12 @@ fun UserFinderScreen(
 
     val onSearchedValueChanged: (TextFieldValue) -> Unit = { value ->
         viewModel.setSearchText(value)
+    }
+
+    val onItemClicked: (String) -> Unit = { username ->
+        navController.navigate(
+            NavigationDestination.UserDetailNavigationDestination.createRoute(username = username),
+        )
     }
 
     Column(
@@ -91,9 +100,7 @@ fun UserFinderScreen(
                                 val item = uiState.searchResult!!.getOrNull()!!.items[it]
                                 UserFinderListItem(
                                     model = item,
-                                    onItemClicked = {
-                                        // TODO: Implement
-                                    },
+                                    onItemClicked = onItemClicked,
                                 )
                             }
                         }

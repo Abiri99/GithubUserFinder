@@ -1,6 +1,7 @@
 package com.example.githubuserfinder.app
 
-object NavDestinations {
+internal object ScreenName {
 
     const val UserFinderScreen = "user_finder"
+    const val UserDetailScreen = "user_detail"
 }

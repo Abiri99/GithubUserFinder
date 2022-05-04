@@ -30,11 +30,11 @@ import com.example.githubuserfinder.user_finder.data.model.GithubSearchItem
 @Composable
 fun UserFinderListItem(
     model: GithubSearchItem,
-    onItemClicked: (Int) -> Unit,
+    onItemClicked: (String) -> Unit,
 ) {
     TouchableScale(
         onClick = {
-            onItemClicked(model.id)
+            onItemClicked(model.login)
         },
         modifier = Modifier
             .requiredHeight(86.dp)

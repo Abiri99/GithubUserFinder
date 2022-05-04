@@ -47,10 +47,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
+import com.example.githubuserfinder.core.presentation.UiConstant.HEADER_DEFAULT_HEIGHT
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.debugModifier
-
-private val HEADER_HEIGHT = 84.dp
 
 @OptIn(ExperimentalAnimationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
@@ -64,12 +63,12 @@ fun UserFinderAppBar(
     val searchIconSize = 24.dp
 
     /**
-     * This field is going to set the search icon's start padding relative to the [HEADER_HEIGHT]
+     * This field is going to set the search icon's start padding relative to the [HEADER_DEFAULT_HEIGHT]
      * */
-    val searchIconTouchableSpacePadding = HEADER_HEIGHT - searchIconSize
+    val searchIconTouchableSpacePadding = HEADER_DEFAULT_HEIGHT - searchIconSize
 
     /**
-     * This field is going to set the search icon's vertical padding relative to the [HEADER_HEIGHT]
+     * This field is going to set the search icon's vertical padding relative to the [HEADER_DEFAULT_HEIGHT]
      * */
     val searchIconTouchableSpaceVerticalPadding = searchIconTouchableSpacePadding.div(2)
 
@@ -102,7 +101,7 @@ fun UserFinderAppBar(
         backgroundColor = Color.Black,
         modifier = Modifier
             .fillMaxWidth()
-            .requiredHeight(HEADER_HEIGHT)
+            .requiredHeight(HEADER_DEFAULT_HEIGHT)
             .zIndex(1f), // zIndex is added so that card's shadow would be drawn on top of the content
         contentColor = Color.White,
         shape = RectangleShape,
@@ -190,7 +189,7 @@ fun UserFinderAppBar(
                 TouchableScale(
                     onClick = if (isUserSearching) onDismissSearchClicked else onSearchIconClicked,
                     modifier = Modifier
-                        .requiredHeight(HEADER_HEIGHT)
+                        .requiredHeight(HEADER_DEFAULT_HEIGHT)
                         .debugModifier(Modifier.background(Color.White.copy(0.1f)))
                 ) {
                     if (isUserSearching) {

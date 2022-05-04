@@ -3,11 +3,13 @@ package com.example.githubuserfinder.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.view.WindowCompat
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.githubuserfinder.core.data.NetworkRequester
+import com.example.githubuserfinder.user_detail.presentation.UserDetailScreen
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSourceImpl
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
@@ -24,17 +26,34 @@ class MainActivity : ComponentActivity() {
 
             NavHost(
                 navController = navController,
-                startDestination = NavDestinations.UserFinderScreen,
+                startDestination = ScreenName.UserFinderScreen,
             ) {
                 composable(
-                    route = NavDestinations.UserFinderScreen,
+                    route = NavigationDestination.UserFinderNavigationDestination.routeTemplate,
                 ) {
                     UserFinderScreen(
+                        navController = navController,
                         viewModel = UserFinderViewModel(
                             searchRemoteDataSource = SearchRemoteDataSourceImpl(
                                 networkRequester = networkRequester,
                             )
                         ),
+                    )
+                }
+
+                composable(
+                    route = NavigationDestination.UserDetailNavigationDestination.routeTemplate,
+                    arguments = listOf(
+                        navArgument(name = NavArgs.Username) {
+                            nullable = false
+                            type = NavType.StringType
+                        }
+                    ),
+                ) { entry ->
+                    val username = entry.arguments?.getString(NavArgs.Username)
+                    UserDetailScreen(
+                        navController = navController,
+                        username = username!!,
                     )
                 }
             }
