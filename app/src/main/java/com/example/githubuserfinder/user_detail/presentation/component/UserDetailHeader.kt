@@ -23,7 +23,6 @@ import com.example.githubuserfinder.core.presentation.component.TouchableScale
 
 @Composable
 fun UserDetailHeader(
-    username: String,
     onNavigatedBack: () -> Unit,
 ) {
     Card(
@@ -55,7 +54,7 @@ fun UserDetailHeader(
             }
 
             Text(
-                text = username,
+                text = "Detail",
                 style = CustomTextStyle.header,
             )
         }

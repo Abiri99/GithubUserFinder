@@ -3,17 +3,9 @@ package com.example.githubuserfinder.core.data
 import org.json.JSONObject
 
 fun JSONObject.getStringNullable(name: String): String? {
-    return if (this.has(name)) {
-        this.getString(name)
-    } else {
-        null
-    }
-}
+    if (!this.has(name)) return null
 
-fun JSONObject.getIntNullable(name: String): Int? {
-    return if (this.has(name)) {
-        this.getInt(name)
-    } else {
-        null
-    }
+    if (this.getString(name) == "null") return null
+
+    return this.getString(name)
 }

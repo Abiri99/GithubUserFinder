@@ -1,13 +1,18 @@
 package com.example.githubuserfinder.user_detail.presentation.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
@@ -28,6 +34,7 @@ import com.example.githubuserfinder.core.presentation.component.NetworkImage
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.rememberStateWithLifecycle
 import com.example.githubuserfinder.user_detail.presentation.component.UserDetailHeader
+import com.example.githubuserfinder.user_detail.presentation.component.UserDetailTableRow
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
 
 @Composable
@@ -47,10 +54,10 @@ fun UserDetailScreen(
     val configuration = LocalConfiguration.current
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
         UserDetailHeader(
-            username = username,
             onNavigatedBack = { navController.navigateUp() },
         )
 
@@ -72,32 +79,104 @@ fun UserDetailScreen(
                 uiState.value.userData?.isSuccess == true -> {
                     val data = uiState.value.userData!!.getOrNull()!!
 
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
-                        NetworkImage(
-                            url = data.avatarUrl,
-                            modifier = Modifier
-                                .requiredWidth(
-                                    configuration.screenWidthDp.dp
-                                )
-                                .requiredHeight(
-                                    configuration.screenWidthDp.dp
-                                )
-                                .drawWithCache {
-                                    onDrawWithContent {
-                                        drawContent()
+                    NetworkImage(
+                        url = data.avatarUrl,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .requiredWidth(
+                                configuration.screenWidthDp.dp
+                            )
+                            .requiredHeight(
+                                configuration.screenWidthDp.dp
+                            )
+                            .graphicsLayer(),
+                        imageModifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.FillBounds,
+                    )
 
-                                        val gradient = Brush.verticalGradient(
-                                            colors = listOf(Color.Black, Color.Transparent),
-                                            startY = size.height,
-                                            endY = 3 * size.height / 4,
-                                        )
-                                        drawRect(gradient)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .requiredHeight(configuration.screenWidthDp.dp)
+                                .fillMaxWidth()
+                        ) {
+                            Spacer(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .drawWithCache {
+                                        onDrawWithContent {
+                                            drawContent()
+
+                                            val gradient = Brush.verticalGradient(
+                                                colors = listOf(Color.Black, Color.Transparent),
+                                                startY = size.height,
+                                                endY = 3 * size.height / 4,
+                                            )
+                                            drawRect(gradient)
+                                        }
                                     }
-                                },
-                            imageModifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.FillBounds,
+                            )
+
+                            Text(
+                                text = "@$username",
+                                style = CustomTextStyle.header.copy(
+                                    color = Color.White,
+                                ),
+                                modifier = Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(horizontal = 24.dp, vertical = 16.dp),
+                            )
+                        }
+
+                        Spacer(
+                            modifier = Modifier
+                                .height(16.dp)
+                                .fillMaxWidth()
+                                .background(Color.White)
+                        )
+
+                        UserDetailTableRow(former = "Name: ${data.name}", latter = "")
+
+                        UserDetailTableRow(
+                            former = "Following: ${data.following}",
+                            latter = "Followers: ${data.followers}"
+                        )
+
+                        UserDetailTableRow(
+                            former = "Public Repos: ${data.publicRepos}",
+                            latter = "Company: " + (data.company ?: "-")
+                        )
+
+                        UserDetailTableRow(
+                            former = "Blog: " + (data.blog ?: "-"),
+                            latter = "Location: " + (data.location ?: "-"),
+                        )
+
+                        UserDetailTableRow(
+                            former = "Email: " + (if (!data.email.isNullOrBlank()) data.email else "-"),
+                            latter = "Twitter: " + (data.twitterUsername ?: "-"),
+                        )
+
+                        data.bio?.let { bio ->
+                            Text(
+                                text = "Biography: $bio",
+                                style = CustomTextStyle.content,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.White)
+                                    .padding(24.dp)
+                            )
+                        }
+
+                        Spacer(
+                            modifier = Modifier
+                                .requiredHeight(configuration.screenWidthDp.dp - 100.dp)
+                                .fillMaxWidth()
+                                .background(Color.White)
                         )
                     }
                 }

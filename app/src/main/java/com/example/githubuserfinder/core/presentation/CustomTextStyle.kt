@@ -9,7 +9,7 @@ object CustomTextStyle {
 
     val header = TextStyle(
         color = Color.White,
-        fontSize = 18.sp,
+        fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
     )
 

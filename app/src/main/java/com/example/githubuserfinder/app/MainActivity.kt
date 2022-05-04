@@ -3,6 +3,7 @@ package com.example.githubuserfinder.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.NavDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
             NavHost(
                 navController = navController,
-                startDestination = ScreenName.UserFinderScreen,
+                startDestination = NavigationDestination.UserFinderNavigationDestination.routeTemplate,
             ) {
                 composable(
                     route = NavigationDestination.UserFinderNavigationDestination.routeTemplate,
