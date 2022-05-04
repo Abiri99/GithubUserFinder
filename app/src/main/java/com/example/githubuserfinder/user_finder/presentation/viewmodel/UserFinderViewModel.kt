@@ -84,6 +84,11 @@ class UserFinderViewModel(
                 )
             )
         }
+        _uiState.emit(
+            _uiState.value.copy(
+                isSearching = false,
+            )
+        )
     }
 
     fun setSearchText(value: TextFieldValue) = viewModelScope.launch {

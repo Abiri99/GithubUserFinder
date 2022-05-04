@@ -9,7 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.githubuserfinder.core.data.NetworkRequester
+import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
+import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSourceImpl
 import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
+import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSourceImpl
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
@@ -28,8 +31,15 @@ class MainActivity : ComponentActivity() {
             val searchRemoteDataSource: SearchRemoteDataSource =
                 SearchRemoteDataSourceImpl(networkRequester = networkRequester)
 
+            val usersRemoteDataSource: UsersRemoteDataSource =
+                UsersRemoteDataSourceImpl(networkRequester = networkRequester)
+
             val userFinderViewModel = UserFinderViewModel(
                 searchRemoteDataSource = searchRemoteDataSource,
+            )
+
+            val userDetailViewModel = UserDetailViewModel(
+                usersRemoteDataSource = usersRemoteDataSource,
             )
 
             NavHost(
@@ -56,6 +66,7 @@ class MainActivity : ComponentActivity() {
                 ) { entry ->
                     val username = entry.arguments?.getString(NavArgs.Username)
                     UserDetailScreen(
+                        viewModel = userDetailViewModel,
                         navController = navController,
                         username = username!!,
                     )

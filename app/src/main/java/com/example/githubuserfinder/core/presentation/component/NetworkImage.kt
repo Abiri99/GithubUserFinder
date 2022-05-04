@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,7 +41,7 @@ fun NetworkImage(
             .size(Size.ORIGINAL)
             .diskCacheKey(url)
             .memoryCacheKey(url)
-            .size(48, 48)
+//            .size(48, 48)
             .crossfade(true)
             .crossfade(100)
 
