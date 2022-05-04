@@ -69,7 +69,7 @@ fun UserFinderScreen(
                 }
                 uiState.searchResult == null -> {
                     Text(
-                        text = "Tap the " + Emoji.search + " above and start " + Emoji.eye + " Github users " + Emoji.blackCat,
+                        text = "Tap the " + Emoji.search + " above and start " + Emoji.eye + "ing" + " Github users " + Emoji.blackCat,
                         style = CustomTextStyle.contentLargeSemiBold,
                         color = Color.Black,
                         textAlign = TextAlign.Center,
