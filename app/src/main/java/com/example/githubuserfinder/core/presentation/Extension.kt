@@ -8,13 +8,11 @@ import com.example.githubuserfinder.BuildConfig
  * when the application is running in Debug mode
  * */
 fun Modifier.debugModifier(modifier: Modifier): Modifier {
-    this.then(
+    return this.then(
         if (BuildConfig.DEBUG) {
             modifier
         } else {
             Modifier
         }
     )
-
-    return this
 }

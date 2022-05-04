@@ -176,7 +176,7 @@ fun UserFinderAppBar(
                     }.using(
                         SizeTransform(clip = false)
                     )
-                }
+                },
             ) { isUserSearching ->
                 val iconModifier = Modifier
                     .padding(
