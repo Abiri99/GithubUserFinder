@@ -5,10 +5,10 @@ import androidx.core.net.toUri
 import org.json.JSONObject
 
 class GithubSearchItem private constructor(
-    private val id: Int,
-    private val login: String,
-    private val avatarUri: Uri,
-    private val score: Int,
+    val id: Int,
+    val login: String,
+    val avatarUri: Uri,
+    val score: Int,
 ) {
 
     companion object {

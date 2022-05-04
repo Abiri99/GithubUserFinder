@@ -3,9 +3,9 @@ package com.example.githubuserfinder.user_finder.data.model
 import org.json.JSONObject
 
 class GithubSearchResponse private constructor(
-    private val totalCount: Int,
-    private val incompleteResults: Boolean,
-    private val items: List<GithubSearchItem>,
+    val totalCount: Int,
+    val incompleteResults: Boolean,
+    val items: List<GithubSearchItem>,
 ) {
 
     companion object {

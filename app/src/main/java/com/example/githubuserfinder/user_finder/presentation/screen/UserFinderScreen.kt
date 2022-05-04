@@ -1,11 +1,16 @@
 package com.example.githubuserfinder.user_finder.presentation.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +26,10 @@ import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.debugModifier
 import com.example.githubuserfinder.core.presentation.rememberStateWithLifecycle
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderAppBar
+import com.example.githubuserfinder.user_finder.presentation.component.UserFinderListItem
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserFinderScreen(
     viewModel: UserFinderViewModel,
@@ -52,7 +59,9 @@ fun UserFinderScreen(
             when {
                 uiState.isSearching -> {
                     CircularProgressIndicator(
-                        modifier = Modifier.requiredSize(48.dp).align(Alignment.Center),
+                        modifier = Modifier
+                            .requiredSize(48.dp)
+                            .align(Alignment.Center),
                         color = Color.Black,
                         strokeWidth = 4.dp,
                     )
@@ -68,8 +77,23 @@ fun UserFinderScreen(
                             .padding(horizontal = 24.dp),
                     )
                 }
-                uiState.searchResult!!.isSuccess -> {
-                    // TODO: Implement
+                uiState.searchResult?.isSuccess == true -> {
+                    LazyVerticalGrid(
+                        cells = GridCells.Adaptive(180.dp),
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(24.dp),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        items(uiState.searchResult?.getOrNull()?.items?.size ?: 0) {
+                            val item = uiState.searchResult!!.getOrNull()!!.items[it]
+                            UserFinderListItem(
+                                model = item,
+                                onItemClicked = {
+                                    // TODO: Implement
+                                },
+                            )
+                        }
+                    }
                 }
                 uiState.searchResult!!.isFailure -> {
                     TouchableScale(onClick = {
