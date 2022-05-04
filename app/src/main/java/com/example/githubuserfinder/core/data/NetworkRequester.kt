@@ -1,7 +1,11 @@
 package com.example.githubuserfinder.core.data
 
+import android.util.Log
+import com.example.githubuserfinder.BuildConfig
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.BufferedInputStream
@@ -11,6 +15,8 @@ import java.net.MalformedURLException
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
+
+private const val TAG = "NetworkRequester"
 
 /**
  * This class:
@@ -26,15 +32,24 @@ class NetworkRequester {
         url: String,
         coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
         successResultMapper: (JSONObject) -> T,
-    ): Result<T> =
+    ): Result<T>? =
         withContext(coroutineDispatcher) {
-            // TODO: Find a solution for the below warning of the URL & openConnection()
-            val apiUrl = URL(url)
-            val urlConnection: HttpsURLConnection = apiUrl.openConnection() as HttpsURLConnection
+            lateinit var urlConnection: HttpsURLConnection
             try {
+                // TODO: Find a solution for the below warning of the URL & openConnection()
+                val apiUrl = URL(url)
+                ensureActive()
+                urlConnection = apiUrl.openConnection() as HttpsURLConnection
+                ensureActive()
                 val responseStream: InputStream = BufferedInputStream(urlConnection.inputStream)
+                ensureActive()
                 val responseString = String(responseStream.readBytes(), StandardCharsets.UTF_8)
+                ensureActive()
                 val jsonResponse = JSONObject(responseString)
+
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, "server response: $jsonResponse")
+                }
 
                 Result.success(successResultMapper(jsonResponse))
             } catch (e: MalformedURLException) {
@@ -43,6 +58,9 @@ class NetworkRequester {
             } catch (e: IOException) {
                 // This exception could be thrown when calling `url.openConnection`
                 Result.failure(e)
+            } catch (e: CancellationException) {
+                // This exception could be throw when the coroutine is cancelled
+                null
             } finally {
                 urlConnection.disconnect()
             }

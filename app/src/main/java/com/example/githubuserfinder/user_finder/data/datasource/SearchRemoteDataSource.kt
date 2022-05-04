@@ -4,5 +4,5 @@ import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
 
 interface SearchRemoteDataSource {
 
-    suspend fun fetchUsers(query: String): Result<GithubSearchResponse>
+    suspend fun fetchUsers(query: String): Result<GithubSearchResponse>?
 }

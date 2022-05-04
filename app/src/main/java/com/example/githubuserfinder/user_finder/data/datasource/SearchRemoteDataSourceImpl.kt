@@ -8,7 +8,7 @@ class SearchRemoteDataSourceImpl(
 ) : SearchRemoteDataSource {
 
     // TODO: Handle exceptions
-    override suspend fun fetchUsers(query: String): Result<GithubSearchResponse> = networkRequester
+    override suspend fun fetchUsers(query: String): Result<GithubSearchResponse>? = networkRequester
         .invoke(
             url = "https://api.github.com/search/users?q=$query",
             successResultMapper = { json ->
