@@ -13,11 +13,11 @@ import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
@@ -140,7 +140,7 @@ fun UserFinderAppBar(
                             color = Color.White,
                         ),
                         modifier = Modifier
-                            .fillMaxHeight()
+                            .wrapContentHeight()
                             .padding(bottom = 8.dp)
                             .focusRequester(searchInputFocusRequester),
                         singleLine = true,
