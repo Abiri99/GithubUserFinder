@@ -56,6 +56,7 @@ import com.example.githubuserfinder.core.presentation.debugModifier
 fun UserFinderAppBar(
     searchedValue: TextFieldValue,
     onSearchedValueChanged: (TextFieldValue) -> Unit,
+    isSearchEnabledInitially: Boolean = false,
 ) {
 
     val focusManager = LocalFocusManager.current
@@ -78,7 +79,7 @@ fun UserFinderAppBar(
      * This is a local state, so it doesn't need to be in
      * the [com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel]
      * */
-    var isSearchEnabled by remember { mutableStateOf(false) }
+    var isSearchEnabled by remember { mutableStateOf(isSearchEnabledInitially) }
 
     val onSearchIconClicked = {
         isSearchEnabled = true

@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +22,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.githubuserfinder.BuildConfig
 import com.example.githubuserfinder.app.NavigationDestination
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.Emoji
@@ -62,6 +60,7 @@ fun UserFinderScreen(
         UserFinderAppBar(
             uiState.searchedText,
             onSearchedValueChanged = onSearchedValueChanged,
+            isSearchEnabledInitially = uiState.searchedText.text.isNotBlank(),
         )
 
         // Content
