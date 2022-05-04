@@ -39,7 +39,7 @@ class UserFinderViewModel(
 
     private fun observeSearchedText() = viewModelScope.launch {
         _uiState
-            .distinctUntilChanged { old, new -> old.searchedText == new.searchedText }
+            .distinctUntilChanged { old, new -> old.searchedText.text == new.searchedText.text }
             .collectLatest {
                 if (it.searchedText.text.isBlank()) {
                     _uiState.emit(
