@@ -15,6 +15,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,9 +26,13 @@ import com.example.githubuserfinder.core.presentation.Emoji
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.debugModifier
 import com.example.githubuserfinder.core.presentation.rememberStateWithLifecycle
+import com.example.githubuserfinder.user_finder.data.model.GithubSearchItem
+import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
+import com.example.githubuserfinder.user_finder.presentation.component.CustomVerticalGridWithPagination
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderAppBar
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderListItem
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -35,10 +40,16 @@ fun UserFinderScreen(
     viewModel: UserFinderViewModel,
 ) {
 
+    val coroutineScope = rememberCoroutineScope()
+
     val uiState by rememberStateWithLifecycle(stateFlow = viewModel.uiState)
 
     val onSearchedValueChanged: (String) -> Unit = { value ->
         viewModel.setSearchText(value)
+    }
+
+    val fetchNextPageCallback: (Int) -> Result<> = { nextPage ->
+        viewModel.fetchUsersWhomNameContains(uiState.searchedText!!, nextPage)
     }
 
     Column(
@@ -78,6 +89,13 @@ fun UserFinderScreen(
                     )
                 }
                 uiState.searchResult?.isSuccess == true -> {
+                    CustomVerticalGridWithPagination<GithubSearchItem, GithubSearchResponse>(
+                        initialData = uiState.searchResult?.getOrNull()?.items,
+                        fetchPageCallback = fetchNextPageCallback,
+                        apiResultToListConverter =,
+                        itemBuilder =,
+                        maxCountCalculator =
+                    )
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(180.dp),
                         modifier = Modifier.fillMaxSize(),

@@ -1,9 +1,7 @@
 package com.example.githubuserfinder.user_finder.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubuserfinder.BuildConfig
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
 import kotlinx.coroutines.delay
@@ -56,13 +54,13 @@ class UserFinderViewModel(
             }
     }
 
-    fun fetchUsersWhomNameContains(query: String) = viewModelScope.launch {
+    fun fetchUsersWhomNameContains(query: String, page: Int = 1) = viewModelScope.launch {
         _uiState.emit(
             _uiState.value.copy(
                 isSearching = true,
             )
         )
-        val result = searchRemoteDataSource.fetchUsers(query)
+        val result = searchRemoteDataSource.fetchUsers(query, page)
         _uiState.emit(
             _uiState.value.copy(
                 isSearching = false,
