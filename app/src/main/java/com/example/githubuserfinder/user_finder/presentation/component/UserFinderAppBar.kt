@@ -57,6 +57,7 @@ fun UserFinderAppBar(
     searchedValue: TextFieldValue,
     onSearchedValueChanged: (TextFieldValue) -> Unit,
     isSearchEnabledInitially: Boolean = false,
+    onSearchDismissed: () -> Unit,
 ) {
 
     val focusManager = LocalFocusManager.current
@@ -87,6 +88,7 @@ fun UserFinderAppBar(
 
     val onDismissSearchClicked = {
         isSearchEnabled = false
+        onSearchDismissed()
     }
 
     LaunchedEffect(isSearchEnabled) {

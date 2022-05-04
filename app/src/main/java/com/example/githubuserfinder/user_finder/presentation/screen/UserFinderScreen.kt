@@ -61,6 +61,9 @@ fun UserFinderScreen(
             uiState.searchedText,
             onSearchedValueChanged = onSearchedValueChanged,
             isSearchEnabledInitially = uiState.searchedText.text.isNotBlank(),
+            onSearchDismissed = {
+                viewModel.setSearchText(TextFieldValue())
+            }
         )
 
         // Content
