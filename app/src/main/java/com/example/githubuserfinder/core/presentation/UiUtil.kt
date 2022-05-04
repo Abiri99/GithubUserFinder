@@ -1,4 +1,4 @@
-package ir.itoll.mycarapp.core.presentation.util
+package com.example.githubuserfinder.core.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State

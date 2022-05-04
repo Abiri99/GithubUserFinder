@@ -1,11 +1,11 @@
-package com.example.githubuserfinder.core
+package com.example.githubuserfinder.core.presentation
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-object TextStyles {
+object CustomTextStyle {
 
     val header = TextStyle(
         color = Color.White,

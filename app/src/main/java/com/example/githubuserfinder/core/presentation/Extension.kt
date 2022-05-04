@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core
+package com.example.githubuserfinder.core.presentation
 
 import androidx.compose.ui.Modifier
 import com.example.githubuserfinder.BuildConfig

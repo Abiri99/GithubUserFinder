@@ -23,7 +23,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -47,9 +46,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.example.githubuserfinder.core.TextStyles
-import com.example.githubuserfinder.core.TouchableScale
-import com.example.githubuserfinder.core.debugModifier
+import com.example.githubuserfinder.core.presentation.CustomTextStyle
+import com.example.githubuserfinder.core.presentation.component.TouchableScale
+import com.example.githubuserfinder.core.presentation.debugModifier
 
 private val HEADER_HEIGHT = 84.dp
 
@@ -133,7 +132,7 @@ fun UserFinderAppBar(
                         value = searchedValue ?: "",
                         onValueChange = onSearchedValueChanged,
                         maxLines = 1,
-                        textStyle = LocalTextStyle.current,
+                        textStyle = CustomTextStyle.content,
                         modifier = Modifier
                             .fillMaxHeight()
                             .weight(1f)
@@ -159,7 +158,7 @@ fun UserFinderAppBar(
                     // Show Title
                     Text(
                         text = "Github User Finder",
-                        style = TextStyles.header,
+                        style = CustomTextStyle.header,
                     )
                 }
             }

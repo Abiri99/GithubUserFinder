@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.githubuserfinder.core.debugModifier
+import com.example.githubuserfinder.core.presentation.debugModifier
+import com.example.githubuserfinder.core.presentation.rememberStateWithLifecycle
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderAppBar
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
-import ir.itoll.mycarapp.core.presentation.util.rememberStateWithLifecycle
 
 @Composable
 fun UserFinderScreen(
