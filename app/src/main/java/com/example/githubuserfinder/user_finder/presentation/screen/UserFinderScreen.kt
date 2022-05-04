@@ -78,21 +78,34 @@ fun UserFinderScreen(
                     )
                 }
                 uiState.searchResult?.isSuccess == true -> {
-                    LazyVerticalGrid(
-                        cells = GridCells.Adaptive(180.dp),
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(24.dp),
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        items(uiState.searchResult?.getOrNull()?.items?.size ?: 0) {
-                            val item = uiState.searchResult!!.getOrNull()!!.items[it]
-                            UserFinderListItem(
-                                model = item,
-                                onItemClicked = {
-                                    // TODO: Implement
-                                },
-                            )
+                    val result = uiState.searchResult?.getOrNull()
+                    if (result != null && result.items.isNotEmpty()) {
+                        LazyVerticalGrid(
+                            cells = GridCells.Adaptive(180.dp),
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(24.dp),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            items(uiState.searchResult?.getOrNull()?.items?.size ?: 0) {
+                                val item = uiState.searchResult!!.getOrNull()!!.items[it]
+                                UserFinderListItem(
+                                    model = item,
+                                    onItemClicked = {
+                                        // TODO: Implement
+                                    },
+                                )
+                            }
                         }
+                    } else {
+                        Text(
+                            text = "No result!",
+                            style = CustomTextStyle.contentLargeSemiBold,
+                            color = Color.Black,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(horizontal = 24.dp),
+                        )
                     }
                 }
                 uiState.searchResult!!.isFailure -> {
