@@ -46,12 +46,7 @@ class UserFinderViewModel(
             .collectLatest {
                 fetchUsersJob?.cancel()
                 if (it.searchedText.text.isBlank()) {
-                    uiState.emit(
-                        uiState.value.copy(
-                            searchResult = null,
-                            isSearching = false,
-                        )
-                    )
+                    resetUiState()
                 } else {
                     delay(600) // This delay is set, so that the application won't request server on every character user enters
                     fetchUsersJob = fetchUsersWhomNameContains(it.searchedText.text)
@@ -59,26 +54,28 @@ class UserFinderViewModel(
             }
     }
 
-    fun fetchUsersWhomNameContains(query: String): Job = viewModelScope.launch {
+    fun resetUiState() = viewModelScope.launch {
         uiState.emit(
             uiState.value.copy(
-                isSearching = true,
+                searchResult = null,
+                searchedText = TextFieldValue(""),
+                isSearching = false,
             )
         )
-        ensureActive()
-        val result = searchRemoteDataSource.fetchUsers(query)
-        ensureActive()
-        if (result != null) {
-            uiState.emit(
-                uiState.value.copy(
-                    isSearching = false,
-                    searchResult = result,
-                )
-            )
-        }
+    }
+
+    fun setIsSearching(value: Boolean) = viewModelScope.launch {
         uiState.emit(
             uiState.value.copy(
-                isSearching = false,
+                isSearching = value
+            )
+        )
+    }
+
+    fun setSearchResult(value: Result<GithubSearchResponse>?) = viewModelScope.launch {
+        uiState.emit(
+            uiState.value.copy(
+                searchResult = value,
             )
         )
     }
@@ -89,5 +86,16 @@ class UserFinderViewModel(
                 searchedText = value,
             )
         )
+    }
+
+    fun fetchUsersWhomNameContains(query: String): Job = viewModelScope.launch {
+        setIsSearching(true)
+        ensureActive()
+        val result = searchRemoteDataSource.fetchUsers(query)
+        ensureActive()
+        if (result != null) {
+            setSearchResult(result)
+        }
+        setIsSearching(false)
     }
 }
