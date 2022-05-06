@@ -46,7 +46,7 @@ class UserFinderViewModelTest {
             GithubSearchItem(
                 login = "JakeWharton",
                 id = 66577,
-                avatarUri = "https://avatars.githubusercontent.com/u/66577?v=4",
+                avatarUrl = "https://avatars.githubusercontent.com/u/66577?v=4",
                 score = 100,
             )
         ),

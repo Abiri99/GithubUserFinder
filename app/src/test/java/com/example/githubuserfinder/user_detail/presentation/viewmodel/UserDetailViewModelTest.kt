@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
-import com.example.githubuserfinder.user_detail.data.model.GithubUserDetailModel
+import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +37,7 @@ class UserDetailViewModelTest {
 
     private lateinit var userDetailViewModel: UserDetailViewModel
 
-    private lateinit var sampleGithubUserDetailModel: GithubUserDetailModel
+    private lateinit var sampleGithubUserDetail: GithubUserDetail
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -45,7 +45,7 @@ class UserDetailViewModelTest {
         Dispatchers.setMain(mainThreadSurrogate)
         usersRemoteDataSource = mock()
         userDetailViewModel = UserDetailViewModel(usersRemoteDataSource)
-        sampleGithubUserDetailModel = GithubUserDetailModel(
+        sampleGithubUserDetail = GithubUserDetail(
             login = "test",
             avatarUrl = "https://test.png",
             followers = 100,
@@ -64,7 +64,7 @@ class UserDetailViewModelTest {
     @Test
     fun setUserData_thenUpdateUi(): Unit = runBlocking {
 
-        val expectedData = DataResult.Success(sampleGithubUserDetailModel)
+        val expectedData = DataResult.Success(sampleGithubUserDetail)
 
         val job = launch(Dispatchers.Main) {
             userDetailViewModel
@@ -86,7 +86,7 @@ class UserDetailViewModelTest {
     @Test
     fun fetchUserData_whenSucceed_thenUpdateUi(): Unit = runBlocking {
 
-        val apiResult = DataResult.Success(sampleGithubUserDetailModel)
+        val apiResult = DataResult.Success(sampleGithubUserDetail)
 
         whenever(usersRemoteDataSource.getUser(any())).thenReturn(apiResult)
 
@@ -123,7 +123,7 @@ class UserDetailViewModelTest {
             }
         }
 
-        userDetailViewModel.fetchUserData(sampleGithubUserDetailModel.login)
+        userDetailViewModel.fetchUserData(sampleGithubUserDetail.login)
         job.join()
         job.cancel()
     }
@@ -170,7 +170,7 @@ class UserDetailViewModelTest {
             }
         }
 
-        userDetailViewModel.fetchUserData(sampleGithubUserDetailModel.login)
+        userDetailViewModel.fetchUserData(sampleGithubUserDetail.login)
 
         job.join()
         job.cancel()

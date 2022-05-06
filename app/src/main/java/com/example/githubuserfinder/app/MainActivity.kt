@@ -3,17 +3,19 @@ package com.example.githubuserfinder.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.githubuserfinder.core.data.NetworkRequester
+import com.example.githubuserfinder.user_detail.data.adapter.GithubUserDetailJsonAdapter
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSourceImpl
 import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
+import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchItemJsonAdapter
+import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchResponseJsonAdapter
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSourceImpl
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
@@ -29,11 +31,22 @@ class MainActivity : ComponentActivity() {
 
             val networkRequester = NetworkRequester()
 
+            val githubSearchItemJsonAdapter = GithubSearchItemJsonAdapter()
+            val githubSearchResponseJsonAdapter =
+                GithubSearchResponseJsonAdapter(githubSearchItemJsonAdapter = githubSearchItemJsonAdapter)
+            val githubUserDetailJsonAdapter = GithubUserDetailJsonAdapter()
+
             val searchRemoteDataSource: SearchRemoteDataSource =
-                SearchRemoteDataSourceImpl(networkRequester = networkRequester)
+                SearchRemoteDataSourceImpl(
+                    networkRequester = networkRequester,
+                    githubSearchResponseJsonAdapter = githubSearchResponseJsonAdapter,
+                )
 
             val usersRemoteDataSource: UsersRemoteDataSource =
-                UsersRemoteDataSourceImpl(networkRequester = networkRequester)
+                UsersRemoteDataSourceImpl(
+                    networkRequester = networkRequester,
+                    githubUserDetailJsonAdapter = githubUserDetailJsonAdapter,
+                )
 
             val userFinderViewModel = UserFinderViewModel(
                 searchRemoteDataSource = searchRemoteDataSource,

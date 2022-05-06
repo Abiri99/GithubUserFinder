@@ -53,7 +53,7 @@ fun UserFinderListItem(
                 horizontalArrangement = Arrangement.Start,
             ) {
                 NetworkImage(
-                    url = model.avatarUri.toString(),
+                    url = model.avatarUrl.toString(),
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.requiredSize(48.dp),
                     imageModifier = Modifier

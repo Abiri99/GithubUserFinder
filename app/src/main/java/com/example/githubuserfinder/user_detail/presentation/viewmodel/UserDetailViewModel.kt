@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
-import com.example.githubuserfinder.user_detail.data.model.GithubUserDetailModel
+import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 data class UserDetailUiState(
-    val userData: DataResult<GithubUserDetailModel>? = null,
+    val userData: DataResult<GithubUserDetail>? = null,
     val isLoading: Boolean = false,
 )
 
@@ -33,7 +33,7 @@ class UserDetailViewModel(
         )
     }
 
-    fun setUserData(data: DataResult<GithubUserDetailModel>) = viewModelScope.launch {
+    fun setUserData(data: DataResult<GithubUserDetail>) = viewModelScope.launch {
         uiState.emit(
             uiState.value.copy(
                 userData = data,
