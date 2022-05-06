@@ -1,6 +1,5 @@
 package com.example.githubuserfinder.user_finder.presentation.viewmodel
 
-import android.util.Log
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,7 +26,8 @@ class UserFinderViewModel(
     private val searchRemoteDataSource: SearchRemoteDataSource,
 ) : ViewModel() {
 
-    val uiState = MutableStateFlow(UserFinderUiState())
+    val initialUiState = UserFinderUiState()
+    val uiState = MutableStateFlow(initialUiState)
 
     /**
      * This is a reference to the coroutine which handles the request
@@ -37,7 +37,6 @@ class UserFinderViewModel(
     private var fetchUsersJob: Job? = null
 
     init {
-        Log.d(TAG, "init called: ${uiState.value}")
         observeSearchedText()
     }
 

@@ -1,13 +1,11 @@
 package com.example.githubuserfinder.user_finder.data.model
 
-import android.net.Uri
-import androidx.core.net.toUri
 import org.json.JSONObject
 
-class GithubSearchItem private constructor(
+class GithubSearchItem constructor(
     val id: Int,
     val login: String,
-    val avatarUri: Uri,
+    val avatarUri: String,
     val score: Int,
 ) {
 
@@ -16,7 +14,7 @@ class GithubSearchItem private constructor(
             return GithubSearchItem(
                 id = json.getInt("id"),
                 login = json.getString("login"),
-                avatarUri = json.getString("avatar_url").toUri(),
+                avatarUri = json.getString("avatar_url"),
                 score = json.getInt("score"),
             )
         }

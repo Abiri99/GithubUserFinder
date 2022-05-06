@@ -2,12 +2,13 @@ package com.example.githubuserfinder.user_finder.data.model
 
 import org.json.JSONObject
 
-class GithubSearchResponse private constructor(
+class GithubSearchResponse constructor(
     val totalCount: Int,
     val incompleteResults: Boolean,
     val items: List<GithubSearchItem>,
 ) {
 
+    // TODO: Test these kind of methods
     companion object {
         fun fromJson(json: JSONObject): GithubSearchResponse {
             val items = json.getJSONArray("items")
