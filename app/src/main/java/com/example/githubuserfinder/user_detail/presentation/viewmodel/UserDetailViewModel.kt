@@ -22,26 +22,30 @@ class UserDetailViewModel(
 
     val uiState = MutableStateFlow(UserDetailUiState())
 
-    fun fetchUserData(username: String): Job = viewModelScope.launch {
-        uiState.emit(
-            uiState.value.copy(
-                isLoading = true
-            )
-        )
-        ensureActive()
-        val result = usersRemoteDataSource.getUser(username)
-        ensureActive()
-        if (result != null) {
+    fun cancelFetchingData() = dataFetchingJob?.cancel()
+
+    fun fetchUserData(username: String) {
+        dataFetchingJob = viewModelScope.launch {
             uiState.emit(
                 uiState.value.copy(
-                    userData = result,
+                    isLoading = true
+                )
+            )
+            ensureActive()
+            val result = usersRemoteDataSource.getUser(username)
+            ensureActive()
+            if (result != null) {
+                uiState.emit(
+                    uiState.value.copy(
+                        userData = result,
+                    )
+                )
+            }
+            uiState.emit(
+                uiState.value.copy(
+                    isLoading = false,
                 )
             )
         }
-        uiState.emit(
-            uiState.value.copy(
-                isLoading = false,
-            )
-        )
     }
 }

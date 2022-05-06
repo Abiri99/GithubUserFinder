@@ -1,5 +1,6 @@
 package com.example.githubuserfinder.user_detail.presentation.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,10 @@ fun UserDetailScreen(
     navController: NavController,
     username: String,
 ) {
+
+    BackHandler {
+        viewModel.cancelFetchingData()
+    }
 
     // This is supposed the be run only once
     LaunchedEffect(true) {
