@@ -21,8 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.example.githubuserfinder.app.NavigationDestination
 import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.Emoji
@@ -36,8 +34,8 @@ import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinde
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserFinderScreen(
-    navController: NavController,
     viewModel: UserFinderViewModel,
+    onNavigateToUserDetail: (String) -> Unit,
 ) {
 
     val uiState by rememberStateWithLifecycle(stateFlow = viewModel.uiState)
@@ -47,9 +45,7 @@ fun UserFinderScreen(
     }
 
     val onItemClicked: (String) -> Unit = { username ->
-        navController.navigate(
-            NavigationDestination.UserDetailNavigationDestination.createRoute(username = username),
-        )
+        onNavigateToUserDetail(username)
     }
 
     Column(

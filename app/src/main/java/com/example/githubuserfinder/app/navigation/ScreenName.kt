@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.app
+package com.example.githubuserfinder.app.navigation
 
 internal object ScreenName {
 

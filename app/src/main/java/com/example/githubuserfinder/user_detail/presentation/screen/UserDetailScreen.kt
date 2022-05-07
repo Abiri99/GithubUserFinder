@@ -42,8 +42,8 @@ import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetai
 @Composable
 fun UserDetailScreen(
     viewModel: UserDetailViewModel,
-    navController: NavController,
     username: String,
+    onNavigateBack: () -> Unit,
 ) {
 
     BackHandler {
@@ -64,7 +64,7 @@ fun UserDetailScreen(
             .fillMaxSize(),
     ) {
         UserDetailHeader(
-            onNavigatedBack = { navController.navigateUp() },
+            onNavigatedBack = onNavigateBack,
         )
 
         Box(

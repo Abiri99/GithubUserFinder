@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.app
+package com.example.githubuserfinder.app.navigation
 
 sealed class NavigationDestination(
     val routeTemplate: String,

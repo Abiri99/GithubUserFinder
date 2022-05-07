@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.githubuserfinder.app.navigation.NavArgs
+import com.example.githubuserfinder.app.navigation.NavigationDestination
 import com.example.githubuserfinder.core.data.NetworkRequester
 import com.example.githubuserfinder.user_detail.data.adapter.GithubUserDetailJsonAdapter
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
@@ -56,6 +58,18 @@ class MainActivity : ComponentActivity() {
                 usersRemoteDataSource = usersRemoteDataSource,
             )
 
+            val onNavigateToUserDetail: (String) -> Unit = { username ->
+                navController.navigate(
+                    NavigationDestination.UserDetailNavigationDestination.createRoute(
+                        username = username
+                    ),
+                )
+            }
+
+            val onNavigateBack: () -> Unit = {
+                navController.navigateUp()
+            }
+
             NavHost(
                 navController = navController,
                 startDestination = NavigationDestination.UserFinderNavigationDestination.routeTemplate,
@@ -64,8 +78,8 @@ class MainActivity : ComponentActivity() {
                     route = NavigationDestination.UserFinderNavigationDestination.routeTemplate,
                 ) {
                     UserFinderScreen(
-                        navController = navController,
                         viewModel = userFinderViewModel,
+                        onNavigateToUserDetail = onNavigateToUserDetail,
                     )
                 }
 
@@ -81,8 +95,8 @@ class MainActivity : ComponentActivity() {
                     val username = entry.arguments?.getString(NavArgs.Username)
                     UserDetailScreen(
                         viewModel = userDetailViewModel,
-                        navController = navController,
                         username = username!!,
+                        onNavigateBack = onNavigateBack,
                     )
                 }
             }
