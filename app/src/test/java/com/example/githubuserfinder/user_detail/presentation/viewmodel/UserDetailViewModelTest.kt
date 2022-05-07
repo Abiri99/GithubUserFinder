@@ -1,6 +1,5 @@
 package com.example.githubuserfinder.user_detail.presentation.viewmodel
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
@@ -16,7 +15,6 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -26,9 +24,6 @@ import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
 class UserDetailViewModelTest {
-
-    @get:Rule
-    var taskExecutor = InstantTaskExecutorRule()
 
     @OptIn(DelicateCoroutinesApi::class)
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
