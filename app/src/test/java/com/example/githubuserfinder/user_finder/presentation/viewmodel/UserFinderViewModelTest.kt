@@ -28,6 +28,7 @@ import org.mockito.kotlin.whenever
 @RunWith(MockitoJUnitRunner::class)
 class UserFinderViewModelTest {
 
+    // TODO: Remove this
     @get:Rule
     var taskExecutor = InstantTaskExecutorRule()
 

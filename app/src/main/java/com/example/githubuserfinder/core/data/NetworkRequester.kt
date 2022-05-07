@@ -18,6 +18,12 @@ import javax.net.ssl.HttpsURLConnection
 
 private const val TAG = "NetworkRequester"
 
+const val HTTP_304_ERROR_MESSAGE = "Not modified!"
+const val HTTP_404_ERROR_MESSAGE = "Resource not found!"
+const val HTTP_422_ERROR_MESSAGE = "Validation failed!"
+const val HTTP_503_ERROR_MESSAGE = "Service unavailable!"
+const val HTTP_UNKNOWN_ERROR_MESSAGE = "Unknown network error!"
+
 /**
  * This class:
  *  - Ensures that every connection is secured using HTTPS protocol
@@ -29,17 +35,16 @@ private const val TAG = "NetworkRequester"
 class NetworkRequester {
 
     suspend fun <T> invoke(
-        url: String,
+        url: URL,
         coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
         successResultMapper: (JSONObject) -> T,
     ): DataResult<T> =
         withContext(coroutineDispatcher) {
-            lateinit var urlConnection: HttpsURLConnection
+            var urlConnection: HttpsURLConnection? = null
             try {
                 // TODO: Find a solution for the below warning of the URL & openConnection()
-                val apiUrl = URL(url)
                 ensureActive()
-                urlConnection = apiUrl.openConnection() as HttpsURLConnection
+                urlConnection = url.openConnection() as HttpsURLConnection
                 ensureActive()
                 when (urlConnection.responseCode) {
                     200 -> {
@@ -58,19 +63,19 @@ class NetworkRequester {
                         DataResult.Success(successResultMapper(jsonResponse))
                     }
                     304 -> {
-                        DataResult.Error(CustomNetworkException("Not modified!"))
+                        DataResult.Error(CustomNetworkException(HTTP_304_ERROR_MESSAGE))
                     }
                     404 -> {
-                        DataResult.Error(CustomNetworkException("Resource not found!"))
+                        DataResult.Error(CustomNetworkException(HTTP_404_ERROR_MESSAGE))
                     }
                     422 -> {
-                        DataResult.Error(CustomNetworkException("Validation failed!"))
+                        DataResult.Error(CustomNetworkException(HTTP_422_ERROR_MESSAGE))
                     }
                     503 -> {
-                        DataResult.Error(CustomNetworkException("Service unavailable!"))
+                        DataResult.Error(CustomNetworkException(HTTP_503_ERROR_MESSAGE))
                     }
                     else -> {
-                        DataResult.Error(CustomNetworkException("Unknown network exception!"))
+                        DataResult.Error(CustomNetworkException(HTTP_UNKNOWN_ERROR_MESSAGE))
                     }
                 }
             } catch (e: MalformedURLException) {
@@ -81,7 +86,7 @@ class NetworkRequester {
                 DataResult.Error(e)
             } finally {
                 withContext(NonCancellable) {
-                    urlConnection.disconnect()
+                    urlConnection?.disconnect()
                 }
             }
         }
