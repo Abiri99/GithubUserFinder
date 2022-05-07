@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">https://api.github.com</domain>
+        <pin-set>
+            <pin digest="SHA-256">nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8</pin>
+            <pin digest="SHA-256">p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM</pin>
+            <pin digest="SHA-256">+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
