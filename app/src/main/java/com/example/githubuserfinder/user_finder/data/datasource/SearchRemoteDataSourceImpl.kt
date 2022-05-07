@@ -12,12 +12,15 @@ class SearchRemoteDataSourceImpl(
 ) : SearchRemoteDataSource {
 
     // TODO: Handle exceptions
-    override suspend fun fetchUsers(query: String): DataResult<GithubSearchResponse> =
-        networkRequester
-            .invoke(
-                url = URL("https://api.github.com/search/users?q=$query"),
-                successResultMapper = { json ->
-                    githubSearchResponseJsonAdapter.createEntityFromJson(json)
-                },
-            )
+    override suspend fun fetchUsers(query: String): DataResult<GithubSearchResponse> {
+        val jsonResult = networkRequester
+            .invoke(url = URL("https://api.github.com/search/users?q=$query"))
+
+        return when (jsonResult) {
+            is DataResult.Success -> {
+                DataResult.Success(githubSearchResponseJsonAdapter.createEntityFromJson(jsonResult.value))
+            }
+            is DataResult.Error -> DataResult.Error(jsonResult.exception)
+        }
+    }
 }

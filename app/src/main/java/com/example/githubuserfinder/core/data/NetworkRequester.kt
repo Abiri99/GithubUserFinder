@@ -34,11 +34,10 @@ const val HTTP_UNKNOWN_ERROR_MESSAGE = "Unknown network error!"
  * */
 class NetworkRequester {
 
-    suspend fun <T> invoke(
+    suspend fun invoke(
         url: URL,
         coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
-        successResultMapper: (JSONObject) -> T,
-    ): DataResult<T> =
+    ): DataResult<JSONObject> =
         withContext(coroutineDispatcher) {
             var urlConnection: HttpsURLConnection? = null
             try {
@@ -56,11 +55,7 @@ class NetworkRequester {
                         ensureActive()
                         val jsonResponse = JSONObject(responseString)
 
-                        if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "server response: $jsonResponse")
-                        }
-
-                        DataResult.Success(successResultMapper(jsonResponse))
+                        DataResult.Success(jsonResponse)
                     }
                     304 -> {
                         DataResult.Error(CustomNetworkException(HTTP_304_ERROR_MESSAGE))

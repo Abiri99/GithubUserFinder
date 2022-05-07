@@ -68,10 +68,13 @@ class NetworkRequesterTest {
 
         val result = sut.invoke(
             mockUrl,
-            successResultMapper = { json -> fakeModelJsonAdapter.createEntityFromJson(json) }
         )
 
-        assertThat(result.value).isEqualTo(FakeApiSuccessResponse(id = 123))
+        val responseModel = fakeModelJsonAdapter.createEntityFromJson(result.value!!)
+
+        assertThat(responseModel).isEqualTo(
+            FakeApiSuccessResponse(id = 123)
+        )
     }
 
     @Test
@@ -81,11 +84,7 @@ class NetworkRequesterTest {
         val responseHttpCode = (300..600).random()
         whenever(mockConnection.responseCode).thenReturn(responseHttpCode)
 
-        val fakeModelJsonAdapter = FakeApiSuccessResponseJsonAdapter()
-        val result = sut.invoke(
-            mockUrl,
-            successResultMapper = { json -> fakeModelJsonAdapter.createEntityFromJson(json) }
-        )
+        val result = sut.invoke(mockUrl)
 
         // This condition shall be divided into multiple tests
         when (responseHttpCode) {
@@ -106,7 +105,6 @@ class NetworkRequesterTest {
 
         val result = sut.invoke(
             mockUrl,
-            successResultMapper = {}
         )
 
         assertThat(result.exception).isEqualTo(malformedUrlException)
@@ -121,7 +119,6 @@ class NetworkRequesterTest {
 
         val result = sut.invoke(
             mockUrl,
-            successResultMapper = {}
         )
 
         assertThat(result.exception).isEqualTo(ioException)

@@ -11,11 +11,15 @@ class UsersRemoteDataSourceImpl(
     private val githubUserDetailJsonAdapter: GithubUserDetailJsonAdapter,
 ) : UsersRemoteDataSource {
 
-    override suspend fun getUser(username: String): DataResult<GithubUserDetail> =
-        networkRequester.invoke(
-            url = URL("https://api.github.com/users/$username"),
-            successResultMapper = { json ->
-                githubUserDetailJsonAdapter.createEntityFromJson(json)
-            },
-        )
+    override suspend fun getUser(username: String): DataResult<GithubUserDetail> {
+        val jsonResult =
+            networkRequester.invoke(url = URL("https://api.github.com/users/$username"))
+
+        return when (jsonResult) {
+            is DataResult.Success -> {
+                DataResult.Success(githubUserDetailJsonAdapter.createEntityFromJson(jsonResult.value))
+            }
+            is DataResult.Error -> DataResult.Error(exception = jsonResult.exception)
+        }
+    }
 }
