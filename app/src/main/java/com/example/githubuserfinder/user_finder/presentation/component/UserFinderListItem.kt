@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,10 +43,10 @@ fun UserFinderListItem(
     ) {
         Card(
             modifier = Modifier.fillMaxSize(),
-            elevation = 15.dp,
+            elevation = 8.dp,
             shape = RoundedCornerShape(6.dp),
-            backgroundColor = Color.White,
-            contentColor = Color.Black,
+            backgroundColor = MaterialTheme.colors.surface,
+            contentColor = MaterialTheme.colors.onSurface,
         ) {
             Row(
                 modifier = Modifier.padding(16.dp),
@@ -63,7 +64,7 @@ fun UserFinderListItem(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = model.login,
-                    style = CustomTextStyle.content,
+                    style = MaterialTheme.typography.subtitle1,
                     modifier = Modifier.weight(1f),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

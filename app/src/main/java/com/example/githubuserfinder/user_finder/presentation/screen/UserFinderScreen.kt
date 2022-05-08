@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,11 +23,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.githubuserfinder.core.data.DataResult
+import com.example.githubuserfinder.core.presentation.ComposeUtil
 import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.Emoji
+import com.example.githubuserfinder.core.presentation.SystemUiUtil
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.debugModifier
-import com.example.githubuserfinder.core.presentation.rememberStateWithLifecycle
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderAppBar
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderListItem
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
@@ -38,7 +40,11 @@ fun UserFinderScreen(
     onNavigateToUserDetail: (String) -> Unit,
 ) {
 
-    val uiState by rememberStateWithLifecycle(stateFlow = viewModel.uiState)
+    SystemUiUtil.ConfigStatusBar(
+        color = MaterialTheme.colors.primaryVariant
+    )
+
+    val uiState by ComposeUtil.rememberStateWithLifecycle(stateFlow = viewModel.uiState)
 
     val onSearchedValueChanged: (TextFieldValue) -> Unit = { value ->
         viewModel.setSearchText(value)
@@ -51,7 +57,7 @@ fun UserFinderScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .debugModifier(Modifier.background(Color.Green.copy(0.0f))),
+            .background(MaterialTheme.colors.background),
     ) {
         // App Bar
         UserFinderAppBar(
@@ -94,7 +100,7 @@ fun UserFinderScreen(
                         LazyVerticalGrid(
                             cells = GridCells.Adaptive(180.dp),
                             modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(24.dp),
+                            contentPadding = PaddingValues(16.dp),
                             horizontalArrangement = Arrangement.Center,
                         ) {
                             items(uiState.searchResult?.value?.items?.size ?: 0) {

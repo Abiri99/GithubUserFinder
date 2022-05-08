@@ -13,15 +13,18 @@ import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -46,7 +49,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.UiConstant.HEADER_DEFAULT_HEIGHT
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.debugModifier
@@ -61,18 +63,6 @@ fun UserFinderAppBar(
 ) {
 
     val focusManager = LocalFocusManager.current
-
-    val searchIconSize = 24.dp
-
-    /**
-     * This field is going to set the search icon's start padding relative to the [HEADER_DEFAULT_HEIGHT]
-     * */
-    val searchIconTouchableSpacePadding = HEADER_DEFAULT_HEIGHT - searchIconSize
-
-    /**
-     * This field is going to set the search icon's vertical padding relative to the [HEADER_DEFAULT_HEIGHT]
-     * */
-    val searchIconTouchableSpaceVerticalPadding = searchIconTouchableSpacePadding.div(2)
 
     val (searchInputFocusRequester) = remember { FocusRequester.createRefs() }
 
@@ -100,20 +90,21 @@ fun UserFinderAppBar(
     }
 
     Card(
-        elevation = 100.dp,
-        backgroundColor = Color.Black,
+        elevation = 15.dp,
+        backgroundColor = MaterialTheme.colors.surface,
         modifier = Modifier
             .fillMaxWidth()
             .requiredHeight(HEADER_DEFAULT_HEIGHT)
             .zIndex(1f), // zIndex is added so that card's shadow would be drawn on top of the content
-        contentColor = Color.White,
+        contentColor = MaterialTheme.colors.onSurface,
         shape = RectangleShape,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(horizontal = 16.dp) // Due to Material Design 3: https://m3.material.io/components/top-app-bar/specs#e3fd3eba-0444-437c-9a82-071ef03d85b1
         ) {
             AnimatedContent(
                 targetState = isSearchEnabled,
@@ -127,8 +118,7 @@ fun UserFinderAppBar(
                     )
                 },
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 16.dp),
+                    .weight(1f),
             ) { isUserSearching ->
                 if (isUserSearching) {
                     // Show TextInput
@@ -136,12 +126,9 @@ fun UserFinderAppBar(
                         value = searchedValue,
                         onValueChange = onSearchedValueChanged,
                         maxLines = 1,
-                        textStyle = CustomTextStyle.content.copy(
-                            color = Color.White,
-                        ),
+//                        textStyle = MaterialTheme.typography.body2,
                         modifier = Modifier
-                            .wrapContentHeight()
-                            .padding(bottom = 8.dp)
+                            .requiredHeight(48.dp)
                             .focusRequester(searchInputFocusRequester),
                         singleLine = true,
                         keyboardActions = KeyboardActions(
@@ -154,7 +141,6 @@ fun UserFinderAppBar(
                             imeAction = ImeAction.Done,
                         ),
                         colors = TextFieldDefaults.textFieldColors(
-                            textColor = Color.White,
                             cursorColor = Color.White,
                             focusedIndicatorColor = Color.White,
                             unfocusedIndicatorColor = Color.White,
@@ -164,10 +150,12 @@ fun UserFinderAppBar(
                     // Show Title
                     Text(
                         text = "Github User Finder",
-                        style = CustomTextStyle.header,
+                        style = MaterialTheme.typography.h6,
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.requiredWidth(24.dp)) // Due to Material Design 3: https://m3.material.io/components/top-app-bar/specs#e3fd3eba-0444-437c-9a82-071ef03d85b1
 
             AnimatedContent(
                 targetState = isSearchEnabled,
@@ -180,19 +168,14 @@ fun UserFinderAppBar(
                         SizeTransform(clip = false)
                     )
                 },
+                modifier = Modifier.debugModifier(Modifier.background(Color.White.copy(0.1f)))
             ) { isUserSearching ->
                 val iconModifier = Modifier
-                    .padding(
-                        start = 24.dp,
-                        top = searchIconTouchableSpaceVerticalPadding,
-                        bottom = searchIconTouchableSpaceVerticalPadding,
-                        end = 16.dp,
-                    )
-
+                    .requiredSize(24.dp)
                 TouchableScale(
                     onClick = if (isUserSearching) onDismissSearchClicked else onSearchIconClicked,
                     modifier = Modifier
-                        .requiredHeight(HEADER_DEFAULT_HEIGHT)
+                        .requiredSize(48.dp) // Due to Material Design 3: https://m3.material.io/components/top-app-bar/specs#e3fd3eba-0444-437c-9a82-071ef03d85b1
                         .debugModifier(Modifier.background(Color.White.copy(0.1f)))
                 ) {
                     if (isUserSearching) {

@@ -35,14 +35,14 @@ fun UserDetailHeader(
         backgroundColor = Color.Black,
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             TouchableScale(
                 onClick = onNavigatedBack,
                 modifier = Modifier
-                    .requiredHeight(UiConstant.HEADER_DEFAULT_HEIGHT)
+                    .requiredHeight(48.dp)
                     .width(52.dp),
             ) {
                 Icon(
