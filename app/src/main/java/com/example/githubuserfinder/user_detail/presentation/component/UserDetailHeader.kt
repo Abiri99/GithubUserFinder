@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.UiConstant
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 
@@ -55,7 +55,7 @@ fun UserDetailHeader(
 
             Text(
                 text = "Detail",
-                style = CustomTextStyle.header,
+                style = MaterialTheme.typography.h6,
             )
         }
     }

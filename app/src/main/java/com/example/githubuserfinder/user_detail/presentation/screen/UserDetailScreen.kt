@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,14 +30,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.githubuserfinder.core.data.DataResult
-import com.example.githubuserfinder.core.presentation.ComposeUtil
-import com.example.githubuserfinder.core.presentation.CustomTextStyle
-import com.example.githubuserfinder.core.presentation.Emoji
 import com.example.githubuserfinder.core.presentation.component.NetworkImage
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
-import com.example.githubuserfinder.user_detail.presentation.component.UserDetailHeader
+import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
+import com.example.githubuserfinder.core.presentation.util.ComposeUtil
+import com.example.githubuserfinder.core.presentation.util.Emoji
 import com.example.githubuserfinder.user_detail.presentation.component.UserDetailTableRow
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
+import com.example.githubuserfinder.user_finder.presentation.component.CustomAppBar
 
 @Composable
 fun UserDetailScreen(
@@ -47,6 +48,7 @@ fun UserDetailScreen(
 
     BackHandler {
         viewModel.cancelFetchingData()
+        onNavigateBack()
     }
 
     // This is supposed the be run only once
@@ -58,158 +60,173 @@ fun UserDetailScreen(
 
     val configuration = LocalConfiguration.current
 
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colors.surface),
+        contentAlignment = Alignment.Center,
     ) {
-        UserDetailHeader(
-            onNavigatedBack = onNavigateBack,
-        )
 
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-        ) {
-            when {
-                uiState.value.isLoading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .requiredSize(48.dp)
-                            .align(Alignment.Center),
-                        color = Color.Black,
-                        strokeWidth = 4.dp,
-                    )
-                }
-                uiState.value.userData is DataResult.Success -> {
-                    val data = uiState.value.userData!!.value!!
+        val surfaceColor = MaterialTheme.colors.surface
+        val statusBarColor = MaterialTheme.colors.primaryVariant
 
-                    NetworkImage(
-                        url = data.avatarUrl,
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .requiredWidth(
-                                configuration.screenWidthDp.dp
-                            )
-                            .requiredHeight(
-                                configuration.screenWidthDp.dp
-                            )
-                            .graphicsLayer(),
-                        imageModifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.FillBounds,
-                    )
+        when {
+            uiState.value.isLoading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .requiredSize(48.dp)
+                        .align(Alignment.Center),
+                    color = Color.White,
+                    strokeWidth = 4.dp,
+                )
+            }
+            uiState.value.userData is DataResult.Success -> {
+                val data = uiState.value.userData!!.value!!
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .requiredHeight(configuration.screenWidthDp.dp)
-                                .fillMaxWidth()
-                        ) {
-                            Spacer(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .drawWithCache {
-                                        onDrawWithContent {
-                                            drawContent()
-
-                                            val gradient = Brush.verticalGradient(
-                                                colors = listOf(Color.Black, Color.Transparent),
-                                                startY = size.height,
-                                                endY = 3 * size.height / 4,
-                                            )
-                                            drawRect(gradient)
-                                        }
-                                    }
-                            )
-
-                            Text(
-                                text = "@$username",
-                                style = CustomTextStyle.header.copy(
-                                    color = Color.White,
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.BottomStart)
-                                    .padding(horizontal = 24.dp, vertical = 16.dp),
-                            )
-                        }
-
-                        Spacer(
-                            modifier = Modifier
-                                .height(16.dp)
-                                .fillMaxWidth()
-                                .background(Color.White)
+                NetworkImage(
+                    url = data.avatarUrl,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .requiredWidth(
+                            configuration.screenWidthDp.dp
                         )
-
-                        UserDetailTableRow(former = "Name: ${data.name ?: "-"}", latter = "")
-
-                        UserDetailTableRow(
-                            former = "Following: ${data.following}",
-                            latter = "Followers: ${data.followers}"
+                        .requiredHeight(
+                            configuration.screenWidthDp.dp
                         )
-
-                        UserDetailTableRow(
-                            former = "Public Repos: ${data.publicRepos}",
-                            latter = "Company: " + (data.company ?: "-")
-                        )
-
-                        UserDetailTableRow(
-                            former = "Blog: " + (data.blog ?: "-"),
-                            latter = "Location: " + (data.location ?: "-"),
-                        )
-
-                        UserDetailTableRow(
-                            former = "Email: " + (if (!data.email.isNullOrBlank()) data.email else "-"),
-                            latter = "Twitter: " + (data.twitterUsername ?: "-"),
-                        )
-
-                        data.bio?.let { bio ->
-                            Text(
-                                text = "Biography: $bio",
-                                style = CustomTextStyle.content,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(Color.White)
-                                    .padding(24.dp)
-                            )
-                        }
-
-                        Spacer(
-                            modifier = Modifier
-                                .requiredHeight(configuration.screenWidthDp.dp - 100.dp)
-                                .fillMaxWidth()
-                                .background(Color.White)
-                        )
-                    }
-                }
-                uiState.value.userData is DataResult.Error -> {
-                    TouchableScale(onClick = {
-                        viewModel.fetchUserData(username = username)
-                    }) {
-                        val errorMessage =
-                            if (uiState.value.userData?.exception != null && uiState.value.userData?.exception?.message?.isBlank() == false) {
-                                uiState.value.userData!!.exception!!.message!!
-                            } else {
-                                Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
+                        .drawWithCache {
+                            onDrawWithContent {
+                                drawContent()
+                                val topGradient = Brush.verticalGradient(
+                                    colors = listOf(statusBarColor, Color.Transparent),
+                                    startY = 0f,
+                                    endY = 3 * size.height / 4,
+                                )
+                                drawRect(topGradient)
                             }
-                        Text(
-                            text = errorMessage,
-                            style = CustomTextStyle.contentLargeSemiBold,
-                            color = Color.Black,
-                            textAlign = TextAlign.Center,
+                        }
+                        .graphicsLayer(),
+                    imageModifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillBounds,
+                )
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .requiredHeight(configuration.screenWidthDp.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Spacer(
                             modifier = Modifier
-                                .align(Alignment.Center)
-                                .padding(horizontal = 24.dp),
+                                .fillMaxSize()
+                                .drawWithCache {
+                                    onDrawWithContent {
+                                        drawContent()
+
+                                        val bottomGradient = Brush.verticalGradient(
+                                            colors = listOf(surfaceColor, Color.Transparent),
+                                            startY = size.height,
+                                            endY = size.height / 3,
+                                        )
+                                        drawRect(bottomGradient)
+                                    }
+                                }
+                        )
+
+                        Text(
+                            text = "@$username",
+                            style = MaterialTheme.typography.h6.copy(
+                                color = MaterialTheme.colors.onSurface,
+                            ),
+                            modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(horizontal = 24.dp, vertical = 16.dp),
                         )
                     }
-                }
-                uiState.value.userData == null -> {
-                    // In case the request is cancelled
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(16.dp)
+                            .fillMaxWidth()
+                            .background(surfaceColor)
+                    )
+
+                    UserDetailTableRow(former = "Name: ${data.name ?: "-"}", latter = "")
+
+                    UserDetailTableRow(
+                        former = "Following: ${data.following}",
+                        latter = "Followers: ${data.followers}"
+                    )
+
+                    UserDetailTableRow(
+                        former = "Public Repos: ${data.publicRepos}",
+                        latter = "Company: " + (data.company ?: "-")
+                    )
+
+                    UserDetailTableRow(
+                        former = "Blog: " + (data.blog ?: "-"),
+                        latter = "Location: " + (data.location ?: "-"),
+                    )
+
+                    UserDetailTableRow(
+                        former = "Email: " + (if (!data.email.isNullOrBlank()) data.email else "-"),
+                        latter = "Twitter: " + (data.twitterUsername ?: "-"),
+                    )
+
+                    data.bio?.let { bio ->
+                        Text(
+                            text = "Biography: $bio",
+                            style = MaterialTheme.typography.body2.copy(
+                                color = MaterialTheme.colors.onSurface,
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(surfaceColor)
+                                .padding(24.dp)
+                        )
+                    }
+
+                    Spacer(
+                        modifier = Modifier
+                            .requiredHeight(configuration.screenWidthDp.dp - 100.dp)
+                            .fillMaxWidth()
+                            .background(surfaceColor)
+                    )
                 }
             }
+            uiState.value.userData is DataResult.Error -> {
+                TouchableScale(onClick = {
+                    viewModel.fetchUserData(username = username)
+                }) {
+                    val errorMessage =
+                        if (uiState.value.userData?.exception != null) {
+                            ExceptionMessageMapper.getProperMessageForException(uiState.value.userData!!.exception!!)
+                        } else {
+                            Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
+                        }
+                    Text(
+                        text = errorMessage,
+                        style = MaterialTheme.typography.h6,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(horizontal = 24.dp),
+                    )
+                }
+            }
+            uiState.value.userData == null -> {
+                // In case the request is cancelled
+            }
         }
+
+        CustomAppBar(
+            title = username,
+            onNavigateUp = onNavigateBack,
+            isTransparent = true,
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.presentation
+package com.example.githubuserfinder.core.presentation.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -9,7 +9,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 
 object ComposeUtil {
     /**

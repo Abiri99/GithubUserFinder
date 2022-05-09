@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
+import androidx.core.view.WindowCompat
 import com.example.githubuserfinder.app.theme.lightThemeColors
-import com.example.githubuserfinder.core.presentation.SystemUiUtil
 
 const val TAG = "MainActivity"
 
@@ -13,6 +13,8 @@ const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
             MaterialTheme(

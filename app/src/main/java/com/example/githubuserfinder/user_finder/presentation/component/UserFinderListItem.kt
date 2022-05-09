@@ -18,11 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.presentation.CustomTextStyle
 import com.example.githubuserfinder.core.presentation.component.NetworkImage
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchItem
@@ -43,7 +41,7 @@ fun UserFinderListItem(
     ) {
         Card(
             modifier = Modifier.fillMaxSize(),
-            elevation = 8.dp,
+            elevation = 0.dp,
             shape = RoundedCornerShape(6.dp),
             backgroundColor = MaterialTheme.colors.surface,
             contentColor = MaterialTheme.colors.onSurface,

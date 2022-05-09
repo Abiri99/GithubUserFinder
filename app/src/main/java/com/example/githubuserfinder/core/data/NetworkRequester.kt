@@ -74,9 +74,17 @@ class NetworkRequester {
                     }
                 }
             } catch (e: MalformedURLException) {
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, e.toString())
+                }
+
                 // This exception could be throw when creating URL
                 DataResult.Error(e)
             } catch (e: IOException) {
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, e.toString())
+                }
+
                 // This exception could be thrown when calling `url.openConnection`
                 DataResult.Error(e)
             } finally {

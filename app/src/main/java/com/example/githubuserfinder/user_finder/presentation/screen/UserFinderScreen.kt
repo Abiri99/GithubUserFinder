@@ -4,8 +4,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -19,17 +19,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.githubuserfinder.core.data.DataResult
-import com.example.githubuserfinder.core.presentation.ComposeUtil
-import com.example.githubuserfinder.core.presentation.CustomTextStyle
-import com.example.githubuserfinder.core.presentation.Emoji
-import com.example.githubuserfinder.core.presentation.SystemUiUtil
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
-import com.example.githubuserfinder.core.presentation.debugModifier
-import com.example.githubuserfinder.user_finder.presentation.component.UserFinderAppBar
+import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
+import com.example.githubuserfinder.core.presentation.util.ComposeUtil
+import com.example.githubuserfinder.core.presentation.util.Emoji
+import com.example.githubuserfinder.core.presentation.util.SystemUiUtil
+import com.example.githubuserfinder.user_finder.presentation.component.CustomAppBar
+import com.example.githubuserfinder.user_finder.presentation.component.UserFinderBottomSearchBar
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderListItem
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
 
@@ -44,6 +45,8 @@ fun UserFinderScreen(
         color = MaterialTheme.colors.primaryVariant
     )
 
+    val focusManager = LocalFocusManager.current
+
     val uiState by ComposeUtil.rememberStateWithLifecycle(stateFlow = viewModel.uiState)
 
     val onSearchedValueChanged: (TextFieldValue) -> Unit = { value ->
@@ -51,27 +54,20 @@ fun UserFinderScreen(
     }
 
     val onItemClicked: (String) -> Unit = { username ->
+        focusManager.clearFocus()
         onNavigateToUserDetail(username)
     }
 
-    Column(
+    // Content
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
+        contentAlignment = Alignment.Center,
     ) {
-        // App Bar
-        UserFinderAppBar(
-            uiState.searchedText,
-            onSearchedValueChanged = onSearchedValueChanged,
-            isSearchEnabledInitially = uiState.searchedText.text.isNotBlank(),
-            onSearchDismissed = {
-                viewModel.setSearchText(TextFieldValue())
-            }
-        )
 
-        // Content
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.padding(top = 64.dp)
         ) {
             when {
                 uiState.isSearching -> {
@@ -85,8 +81,8 @@ fun UserFinderScreen(
                 }
                 uiState.searchResult == null -> {
                     Text(
-                        text = "Tap the " + Emoji.search + " above and start " + Emoji.eye + "ing" + " Github users " + Emoji.blackCat,
-                        style = CustomTextStyle.contentLargeSemiBold,
+                        text = "Let's " + Emoji.eye + " Github users " + Emoji.blackCat,
+                        style = MaterialTheme.typography.h6,
                         color = Color.Black,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -110,11 +106,15 @@ fun UserFinderScreen(
                                     onItemClicked = onItemClicked,
                                 )
                             }
+
+                            item {
+                                Spacer(modifier = Modifier.padding(bottom = 100.dp))
+                            }
                         }
                     } else {
                         Text(
                             text = "No result!",
-                            style = CustomTextStyle.contentLargeSemiBold,
+                            style = MaterialTheme.typography.h6,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
@@ -128,14 +128,14 @@ fun UserFinderScreen(
                         viewModel.fetchUsersWhomNameContains(uiState.searchedText.text)
                     }) {
                         val errorMessage =
-                            if (uiState.searchResult?.exception != null && uiState.searchResult?.exception?.message?.isBlank() == false) {
-                                uiState.searchResult!!.exception!!.message!!
+                            if (uiState.searchResult?.exception != null) {
+                                ExceptionMessageMapper.getProperMessageForException(uiState.searchResult!!.exception!!)
                             } else {
                                 Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
                             }
                         Text(
                             text = errorMessage,
-                            style = CustomTextStyle.contentLargeSemiBold,
+                            style = MaterialTheme.typography.h6,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
@@ -146,5 +146,19 @@ fun UserFinderScreen(
                 }
             }
         }
+
+        // App Bar
+        CustomAppBar(
+            title = "Github User Finder",
+        )
+
+        // Bottom Search Bar
+        UserFinderBottomSearchBar(
+            searchedValue = uiState.searchedText,
+            onSearchedValueChanged = onSearchedValueChanged,
+        )
+
+        // User Detail Sheet
+
     }
 }
