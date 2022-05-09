@@ -73,7 +73,7 @@ class UserFinderViewModelTest {
     }
 
     @Test
-    fun resetUiState_whenDifferentWithCurrentState_thenResetUiState() = runBlocking {
+    fun resetUiState_whenDifferentWithCurrentState_thenUpdateUiState() = runBlocking {
         if (userFinderViewModel.uiState.value != userFinderViewModel.initialUiState) {
             val job = launch(Dispatchers.Main) {
                 userFinderViewModel.uiState.test {

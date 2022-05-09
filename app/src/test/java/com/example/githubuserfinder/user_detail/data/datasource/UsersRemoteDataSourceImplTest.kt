@@ -3,6 +3,7 @@ package com.example.githubuserfinder.user_detail.data.datasource
 import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.core.data.NetworkRequester
 import com.example.githubuserfinder.user_detail.data.adapter.GithubUserDetailJsonAdapter
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -48,6 +49,22 @@ class UsersRemoteDataSourceImplTest {
     fun tearDown() {
         Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
         mainThreadSurrogate.close()
+    }
+
+    @Test
+    fun whenGetUser_thenReturnNetworkRequestResponse(): Unit = runBlocking {
+
+        val username = "JakeWharton"
+        val url = "https://api.github.com/users/$username"
+
+        val exception = Exception("test")
+        val networkRequestResult = DataResult.Error(exception)
+
+        whenever(networkRequester.invoke(URL(url))).thenReturn(networkRequestResult)
+
+        val result = sut.getUser(username)
+
+        assertThat(result.exception).isEqualTo(exception)
     }
 
     @Test
