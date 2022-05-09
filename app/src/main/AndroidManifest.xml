@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUserFinder"
-        tools:targetApi="n">
+        android:useEmbeddedDex="true"
+        tools:targetApi="q">
         <activity
             android:name=".app.MainActivity"
             android:exported="true"
