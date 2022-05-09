@@ -2,9 +2,12 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">https://api.github.com</domain>
+        <!-- Multiple pins are used in case of future server changes -->
         <pin-set>
             <pin digest="SHA-256">nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8</pin>
+            <!-- backup pin -->
             <pin digest="SHA-256">p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM</pin>
+            <!-- backup pin -->
             <pin digest="SHA-256">+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU</pin>
         </pin-set>
     </domain-config>
