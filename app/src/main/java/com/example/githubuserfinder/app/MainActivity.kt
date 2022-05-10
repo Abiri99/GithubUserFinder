@@ -22,6 +22,11 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (SecurityUtil.isDeviceRooted()) {
+            // TODO: Instead of closing app show proper message
+            finish()
+        }
+
         setContent {
             MaterialTheme(
                 colors = lightThemeColors,
