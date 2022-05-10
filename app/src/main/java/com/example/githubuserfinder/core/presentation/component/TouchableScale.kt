@@ -20,14 +20,17 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * This class indicates the states a [TouchableScale] could be in
+ * */
 private enum class TouchableScaleState {
     Pressed,
     Idle,
 }
 
 /**
- * TouchableScale is a composable which which makes it's child to
- * animate it's scale when is pressed or touched
+ * TouchableScale is a composable which makes it's child to
+ * animate it's scale when it is pressed or touched
  *
  * @param enabled is to handle if the component should respond to touch events
  * */

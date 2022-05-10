@@ -5,6 +5,9 @@ import com.example.githubuserfinder.user_finder.data.model.GithubSearchItem
 import com.example.githubuserfinder.user_finder.presentation.UserFinderString
 import org.json.JSONObject
 
+/**
+ * This class will handle converting a [JSONObject] to a [GithubSearchItem] model
+ * */
 class GithubSearchItemJsonAdapter : JsonAdapter<GithubSearchItem> {
     override fun createEntityFromJson(json: JSONObject): GithubSearchItem {
         return GithubSearchItem(

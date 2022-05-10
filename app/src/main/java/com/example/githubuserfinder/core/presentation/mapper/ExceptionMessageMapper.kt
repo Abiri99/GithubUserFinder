@@ -5,6 +5,10 @@ import com.example.githubuserfinder.core.presentation.util.Emoji
 import java.io.IOException
 import java.net.MalformedURLException
 
+/**
+ * This class is used to map data layer exception messages to a
+ * proper message which we can show to the user
+ * */
 object ExceptionMessageMapper {
 
     fun getProperMessageForException(e: Exception): String {

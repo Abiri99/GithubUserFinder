@@ -11,9 +11,12 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 
 object ComposeUtil {
+
     /**
-     * This function helps not listening to a flow when the app goes to
-     * the background so there will be no UI updates in the background
+     * This function prevents collecting a flow when the app goes to
+     * the background so there will be no UI updates in the background.
+     *
+     * This will probably lead to a less usage of cpu and battery.
      * */
     @OptIn(InternalCoroutinesApi::class)
     @Composable

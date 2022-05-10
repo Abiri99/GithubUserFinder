@@ -21,46 +21,50 @@ import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteData
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
 
+// As this is a small application, we haven't used dependency injection frameworks
+// Here we've created dependencies manually and injected them to different features
 @Composable
 fun GithubUserFinderApp() {
 
     val navController = rememberNavController()
 
+    // Dependencies
     val networkRequester = NetworkRequester()
-
     val githubSearchItemJsonAdapter = GithubSearchItemJsonAdapter()
     val githubSearchResponseJsonAdapter =
         GithubSearchResponseJsonAdapter(githubSearchItemJsonAdapter = githubSearchItemJsonAdapter)
     val githubUserDetailJsonAdapter = GithubUserDetailJsonAdapter()
-
     val searchRemoteDataSource: SearchRemoteDataSource =
         SearchRemoteDataSourceImpl(
             networkRequester = networkRequester,
             githubSearchResponseJsonAdapter = githubSearchResponseJsonAdapter,
         )
-
     val usersRemoteDataSource: UsersRemoteDataSource =
         UsersRemoteDataSourceImpl(
             networkRequester = networkRequester,
             githubUserDetailJsonAdapter = githubUserDetailJsonAdapter,
         )
-
     val userFinderViewModel = UserFinderViewModel(
         searchRemoteDataSource = searchRemoteDataSource,
     )
-
     val userDetailViewModel = UserDetailViewModel(
         usersRemoteDataSource = usersRemoteDataSource,
     )
 
+    /**
+     * This is a callback we must pass to [UserFinderScreen] so that
+     * it would be able to navigate to the detail screen
+     * */
     val onNavigateToUserDetail: (String) -> Unit = { username ->
         navController.navigate(
-            NavigationDestination.UserDetailNavigationDestination.createRoute(
-                username = username
-            ),
+            NavigationDestination.UserDetailNavigationDestination.createRoute(username),
         )
     }
 
+    /**
+     * This is a callback we must pass to the screens (excluding [NavHost]'s startDestination)
+     * so that they can navigate back to the previous screens
+     * */
     val onNavigateBack: () -> Unit = {
         navController.navigateUp()
     }

@@ -1,8 +1,12 @@
 package com.example.githubuserfinder.app.theme
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
+/**
+ * This class defines [MaterialTheme] light mode colors
+ * */
 val lightThemeColors = lightColors(
     primary = Color(0xff365479),
     primaryVariant = Color(0xff2f4858),

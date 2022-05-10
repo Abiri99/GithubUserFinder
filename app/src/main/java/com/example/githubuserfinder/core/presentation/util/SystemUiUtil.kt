@@ -3,10 +3,15 @@ package com.example.githubuserfinder.core.presentation.util
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import com.example.githubuserfinder.app.navigation.NavigationDestination
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 object SystemUiUtil {
 
+    /**
+     * This method will set the status bar and it's icons color
+     * We probably need to call this method for every [NavigationDestination]
+     * */
     @Composable
     fun ConfigStatusBar(color: Color, useDarkIcons: Boolean = false) {
         val systemUiController = rememberSystemUiController()

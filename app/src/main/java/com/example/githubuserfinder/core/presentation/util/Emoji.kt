@@ -2,6 +2,9 @@ package com.example.githubuserfinder.core.presentation.util
 
 import io.michaelrocks.paranoid.Obfuscate
 
+/**
+ * These are emojis which we can use in the texts
+ * */
 @Obfuscate
 object Emoji {
 

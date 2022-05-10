@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
-import androidx.core.view.WindowCompat
 import com.example.githubuserfinder.app.theme.lightThemeColors
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.security.ProviderInstaller
@@ -15,12 +14,13 @@ private const val ERROR_DIALOG_REQUEST_CODE = 1
 // Dependencies are created manually in the main activity and injected to the lower layers
 class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListener {
 
+    /**
+     * This is a flag indicating whether the [Provider] needs to be re-installed or not
+     * */
     private var retryProviderInstall: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
             MaterialTheme(
@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
      */
     override fun onProviderInstalled() {
         // Provider is up-to-date, app can make secure network calls.
+        // User can safely move on
     }
 
     /**
@@ -63,6 +64,7 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
         resultCode: Int,
         data: Intent?
     ) {
+        // This API must be replaced with [registerActivityResult]
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
             // Adding a fragment via GoogleApiAvailability.showErrorDialogFragment
@@ -80,7 +82,6 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
     override fun onPostResume() {
         super.onPostResume()
         if (retryProviderInstall) {
-            // We can now safely retry installation.
             ProviderInstaller.installIfNeededAsync(this, this)
         }
         retryProviderInstall = false
@@ -90,5 +91,8 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
         // This is reached if the provider cannot be updated for some reason.
         // App should consider all HTTP communication to be vulnerable, and take
         // appropriate action.
+
+        // TODO: Replace this with a proper action (e.g. Showing a dialog informing user of the problem)
+        finish()
     }
 }

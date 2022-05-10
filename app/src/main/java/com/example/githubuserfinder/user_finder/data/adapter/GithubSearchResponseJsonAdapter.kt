@@ -5,6 +5,9 @@ import com.example.githubuserfinder.user_finder.data.model.GithubSearchItem
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
 import org.json.JSONObject
 
+/**
+ * This class will handle converting a [JSONObject] to a [GithubSearchResponse] model
+ * */
 class GithubSearchResponseJsonAdapter(
     private val githubSearchItemJsonAdapter: GithubSearchItemJsonAdapter,
 ) : JsonAdapter<GithubSearchResponse> {

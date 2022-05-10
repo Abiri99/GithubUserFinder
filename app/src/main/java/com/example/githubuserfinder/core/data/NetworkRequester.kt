@@ -18,12 +18,10 @@ import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
 
 /**
- * This class:
+ * This class is handle to all of our network requests and:
  *  - Ensures that every connection is secured using HTTPS protocol
  *  - Handles exceptions
- *  - Returns a [Result]
- *
- *  @param successResultMapper is a lambda to convert JSONObject into a custom Kotlin class
+ *  - Returns a [DataResult] of type [JSONObject]
  * */
 class NetworkRequester {
 
@@ -72,15 +70,17 @@ class NetworkRequester {
                 }
 
                 // This exception could be throw when creating URL
-                DataResult.Error(e)
+                DataResult.Error(CustomNetworkException(e.message))
             } catch (e: IOException) {
                 if (BuildConfig.DEBUG) {
                     Log.d(CoreString.NetworkRequesterTag, e.toString())
                 }
 
                 // This exception could be thrown when calling `url.openConnection`
-                DataResult.Error(e)
+                DataResult.Error(CustomNetworkException(e.message))
             } finally {
+                // [NonCancellable] is used so that when the coroutine is cancelled
+                // we make sure that the urlConnection is closed
                 withContext(NonCancellable) {
                     urlConnection?.disconnect()
                 }
