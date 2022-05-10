@@ -1,10 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'io.michaelrocks.paranoid'
 }
 
 android {
-    compileSdk 32
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "com.example.githubuserfinder"
