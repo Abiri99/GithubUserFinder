@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
+import com.example.githubuserfinder.BuildConfig
 import com.example.githubuserfinder.app.theme.lightThemeColors
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.security.ProviderInstaller
@@ -23,6 +24,11 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
         super.onCreate(savedInstanceState)
 
         if (SecurityUtil.isDeviceRooted()) {
+            // TODO: Instead of closing app show proper message
+            finish()
+        }
+
+        if (!BuildConfig.DEBUG && SecurityUtil.isProbablyRunningOnEmulator) {
             // TODO: Instead of closing app show proper message
             finish()
         }
