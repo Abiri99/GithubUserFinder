@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">https://api.github.com</domain>
+        <domain includeSubdomains="true">github.com</domain>
         <!-- Multiple pins are used in case of future server changes -->
         <pin-set>
-            <pin digest="SHA-256">nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8</pin>
-            <!-- backup pin -->
-            <pin digest="SHA-256">p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM</pin>
-            <!-- backup pin -->
-            <pin digest="SHA-256">+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU</pin>
+            <pin digest="SHA-256">Vt2dBOZFK4wvBEPtdHCw71qZK+nHAjvK17quh2C2qUg=</pin>
+            <pin digest="SHA-256">ORtIOYkm5k6Nf2tgAK/uwftKfNhJB3QS0Hs608SiRmE=</pin>
+            <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>
+            <pin digest="SHA-256">/3ftdeWqIAONye/CeEQuLGvtlw4MPnQmKgyPLugFbK8=</pin>
+            <pin digest="SHA-256">e0IRz5Tio3GA1Xs4fUVWmH1xHDiH2dMbVtCBSkOIdqM=</pin>
         </pin-set>
     </domain-config>
 </network-security-config>

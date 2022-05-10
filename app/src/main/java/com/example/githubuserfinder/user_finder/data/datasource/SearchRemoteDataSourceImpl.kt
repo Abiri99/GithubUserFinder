@@ -14,6 +14,32 @@ class SearchRemoteDataSourceImpl(
 
     // TODO: Handle exceptions
     override suspend fun fetchUsers(query: String): DataResult<GithubSearchResponse> {
+//        withContext(Dispatchers.IO) {
+//            val okHttpClient = OkHttpClient.Builder().build()
+//            val retrofit = Retrofit.Builder().baseUrl("https://api.github.com/")
+//                .client(okHttpClient)
+//                .addConverterFactory(
+//                    MoshiConverterFactory.create(
+//                        Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+//                    )
+//                ).build()
+//            val searchApi = retrofit.create(SearchApi::class.java)
+//            val response = searchApi.fetchUsers(query)
+//            response.enqueue(object : Callback<GithubSearchResponseModel> {
+//                override fun onFailure(call: Call<GithubSearchResponseModel>, t: Throwable) {
+//                    Log.d("DS", t.message.toString())
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<GithubSearchResponseModel>,
+//                    response: Response<GithubSearchResponseModel>
+//                ) {
+//                    Log.d("DS", response.body().toString())
+//                }
+//            })
+//            CertificateFA
+//            response.execute()
+//        response.enqueue()
         val jsonResult = networkRequester
             .invoke(url = URL(UserFinderString.FetchUsersRoute(query)))
 
