@@ -27,8 +27,8 @@ import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
 import com.example.githubuserfinder.core.presentation.util.ComposeUtil
-import com.example.githubuserfinder.core.presentation.util.Emoji
 import com.example.githubuserfinder.core.presentation.util.SystemUiUtil
+import com.example.githubuserfinder.user_finder.presentation.UserFinderString
 import com.example.githubuserfinder.user_finder.presentation.component.CustomAppBar
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderBottomSearchBar
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderListItem
@@ -81,7 +81,7 @@ fun UserFinderScreen(
                 }
                 uiState.searchResult == null -> {
                     Text(
-                        text = "Let's " + Emoji.eye + " Github users " + Emoji.blackCat,
+                        text = UserFinderString.InitialScreenMessage,
                         style = MaterialTheme.typography.h6,
                         color = Color.Black,
                         textAlign = TextAlign.Center,
@@ -113,7 +113,7 @@ fun UserFinderScreen(
                         }
                     } else {
                         Text(
-                            text = "No result!",
+                            text = UserFinderString.NoResultMessage,
                             style = MaterialTheme.typography.h6,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
@@ -131,7 +131,7 @@ fun UserFinderScreen(
                             if (uiState.searchResult?.exception != null) {
                                 ExceptionMessageMapper.getProperMessageForException(uiState.searchResult!!.exception!!)
                             } else {
-                                Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
+                                UserFinderString.FailedToRetrieveDataDefaultMessage
                             }
                         Text(
                             text = errorMessage,
@@ -149,7 +149,7 @@ fun UserFinderScreen(
 
         // App Bar
         CustomAppBar(
-            title = "Github User Finder",
+            title = UserFinderString.AppBarTitle,
         )
 
         // Bottom Search Bar
@@ -159,6 +159,5 @@ fun UserFinderScreen(
         )
 
         // User Detail Sheet
-
     }
 }

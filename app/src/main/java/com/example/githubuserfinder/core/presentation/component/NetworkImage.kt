@@ -41,7 +41,6 @@ fun NetworkImage(
             .size(Size.ORIGINAL)
             .diskCacheKey(url)
             .memoryCacheKey(url)
-//            .size(48, 48)
             .crossfade(true)
             .crossfade(100)
 

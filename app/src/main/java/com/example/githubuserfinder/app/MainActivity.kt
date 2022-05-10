@@ -10,8 +10,6 @@ import com.example.githubuserfinder.app.theme.lightThemeColors
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.security.ProviderInstaller
 
-const val TAG = "MainActivity"
-
 private const val ERROR_DIALOG_REQUEST_CODE = 1
 
 // Dependencies are created manually in the main activity and injected to the lower layers

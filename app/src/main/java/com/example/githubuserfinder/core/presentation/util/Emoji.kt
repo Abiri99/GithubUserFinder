@@ -1,5 +1,8 @@
 package com.example.githubuserfinder.core.presentation.util
 
+import io.michaelrocks.paranoid.Obfuscate
+
+@Obfuscate
 object Emoji {
 
     val search: String = String(Character.toChars(0x1F50D))

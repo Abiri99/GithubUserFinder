@@ -2,6 +2,7 @@ package com.example.githubuserfinder.core.data
 
 import android.util.Log
 import com.example.githubuserfinder.BuildConfig
+import com.example.githubuserfinder.core.presentation.CoreString
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -15,14 +16,6 @@ import java.net.MalformedURLException
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
-
-private const val TAG = "NetworkRequester"
-
-const val HTTP_304_ERROR_MESSAGE = "Not modified!"
-const val HTTP_404_ERROR_MESSAGE = "Resource not found!"
-const val HTTP_422_ERROR_MESSAGE = "Validation failed!"
-const val HTTP_503_ERROR_MESSAGE = "Service unavailable!"
-const val HTTP_UNKNOWN_ERROR_MESSAGE = "Unknown network error!"
 
 /**
  * This class:
@@ -58,31 +51,31 @@ class NetworkRequester {
                         DataResult.Success(jsonResponse)
                     }
                     304 -> {
-                        DataResult.Error(CustomNetworkException(HTTP_304_ERROR_MESSAGE))
+                        DataResult.Error(CustomNetworkException(CoreString.HTTP_304_ERROR_MESSAGE))
                     }
                     404 -> {
-                        DataResult.Error(CustomNetworkException(HTTP_404_ERROR_MESSAGE))
+                        DataResult.Error(CustomNetworkException(CoreString.HTTP_404_ERROR_MESSAGE))
                     }
                     422 -> {
-                        DataResult.Error(CustomNetworkException(HTTP_422_ERROR_MESSAGE))
+                        DataResult.Error(CustomNetworkException(CoreString.HTTP_422_ERROR_MESSAGE))
                     }
                     503 -> {
-                        DataResult.Error(CustomNetworkException(HTTP_503_ERROR_MESSAGE))
+                        DataResult.Error(CustomNetworkException(CoreString.HTTP_503_ERROR_MESSAGE))
                     }
                     else -> {
-                        DataResult.Error(CustomNetworkException(HTTP_UNKNOWN_ERROR_MESSAGE))
+                        DataResult.Error(CustomNetworkException(CoreString.HTTP_UNKNOWN_ERROR_MESSAGE))
                     }
                 }
             } catch (e: MalformedURLException) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, e.toString())
+                    Log.d(CoreString.NetworkRequesterTag, e.toString())
                 }
 
                 // This exception could be throw when creating URL
                 DataResult.Error(e)
             } catch (e: IOException) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, e.toString())
+                    Log.d(CoreString.NetworkRequesterTag, e.toString())
                 }
 
                 // This exception could be thrown when calling `url.openConnection`

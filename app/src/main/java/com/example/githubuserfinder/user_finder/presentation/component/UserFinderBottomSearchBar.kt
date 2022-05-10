@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.example.githubuserfinder.user_finder.presentation.UserFinderString
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -85,7 +86,7 @@ fun BoxScope.UserFinderBottomSearchBar(
                 onValueChange = onSearchedValueChanged,
                 placeholder = {
                     Text(
-                        text = "Start searching...",
+                        text = UserFinderString.StartSearching,
                         style = MaterialTheme.typography.caption.copy(
                             color = Color.White.copy(0.6f),
                         ),

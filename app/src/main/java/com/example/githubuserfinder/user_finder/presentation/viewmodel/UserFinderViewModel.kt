@@ -14,8 +14,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
-private const val TAG = "UserFinderViewModel"
-
 data class UserFinderUiState(
     val searchedText: TextFieldValue = TextFieldValue(""),
     val searchResult: DataResult<GithubSearchResponse>? = null,

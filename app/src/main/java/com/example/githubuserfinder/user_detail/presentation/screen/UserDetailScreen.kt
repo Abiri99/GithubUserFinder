@@ -34,7 +34,7 @@ import com.example.githubuserfinder.core.presentation.component.NetworkImage
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
 import com.example.githubuserfinder.core.presentation.util.ComposeUtil
-import com.example.githubuserfinder.core.presentation.util.Emoji
+import com.example.githubuserfinder.user_detail.presentation.UserDetailString
 import com.example.githubuserfinder.user_detail.presentation.component.UserDetailTableRow
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
 import com.example.githubuserfinder.user_finder.presentation.component.CustomAppBar
@@ -137,7 +137,7 @@ fun UserDetailScreen(
                         )
 
                         Text(
-                            text = "@$username",
+                            text = UserDetailString.Username(username),
                             style = MaterialTheme.typography.h6.copy(
                                 color = MaterialTheme.colors.onSurface,
                             ),
@@ -154,31 +154,31 @@ fun UserDetailScreen(
                             .background(surfaceColor)
                     )
 
-                    UserDetailTableRow(former = "Name: ${data.name ?: "-"}", latter = "")
+                    UserDetailTableRow(former = UserDetailString.Name(data.name), latter = "")
 
                     UserDetailTableRow(
-                        former = "Following: ${data.following}",
-                        latter = "Followers: ${data.followers}"
+                        former = UserDetailString.Following(data.following),
+                        latter = UserDetailString.Followers(data.followers)
                     )
 
                     UserDetailTableRow(
-                        former = "Public Repos: ${data.publicRepos}",
-                        latter = "Company: " + (data.company ?: "-")
+                        former = UserDetailString.PublicRepos(data.publicRepos),
+                        latter = UserDetailString.Company(data.company)
                     )
 
                     UserDetailTableRow(
-                        former = "Blog: " + (data.blog ?: "-"),
-                        latter = "Location: " + (data.location ?: "-"),
+                        former = UserDetailString.Blog(data.blog),
+                        latter = UserDetailString.Location(data.location),
                     )
 
                     UserDetailTableRow(
-                        former = "Email: " + (if (!data.email.isNullOrBlank()) data.email else "-"),
-                        latter = "Twitter: " + (data.twitterUsername ?: "-"),
+                        former = UserDetailString.Email(data.email),
+                        latter = UserDetailString.TwitterUserName(data.twitterUsername),
                     )
 
                     data.bio?.let { bio ->
                         Text(
-                            text = "Biography: $bio",
+                            text = UserDetailString.Bio(bio),
                             style = MaterialTheme.typography.body2.copy(
                                 color = MaterialTheme.colors.onSurface,
                             ),
@@ -205,7 +205,7 @@ fun UserDetailScreen(
                         if (uiState.value.userData?.exception != null) {
                             ExceptionMessageMapper.getProperMessageForException(uiState.value.userData!!.exception!!)
                         } else {
-                            Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
+                            UserDetailString.FailedToRetrieveDataErrorMessage
                         }
                     Text(
                         text = errorMessage,

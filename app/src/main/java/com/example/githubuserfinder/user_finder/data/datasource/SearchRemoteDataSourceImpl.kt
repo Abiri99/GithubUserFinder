@@ -4,6 +4,7 @@ import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.core.data.NetworkRequester
 import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchResponseJsonAdapter
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
+import com.example.githubuserfinder.user_finder.presentation.UserFinderString
 import java.net.URL
 
 class SearchRemoteDataSourceImpl(
@@ -14,7 +15,7 @@ class SearchRemoteDataSourceImpl(
     // TODO: Handle exceptions
     override suspend fun fetchUsers(query: String): DataResult<GithubSearchResponse> {
         val jsonResult = networkRequester
-            .invoke(url = URL("https://api.github.com/search/users?q=$query"))
+            .invoke(url = URL(UserFinderString.FetchUsersRoute(query)))
 
         return when (jsonResult) {
             is DataResult.Success -> {
