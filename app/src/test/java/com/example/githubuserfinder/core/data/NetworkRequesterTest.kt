@@ -1,5 +1,10 @@
 package com.example.githubuserfinder.core.data
 
+import com.example.githubuserfinder.core.presentation.CoreString.HTTP_304_ERROR_MESSAGE
+import com.example.githubuserfinder.core.presentation.CoreString.HTTP_404_ERROR_MESSAGE
+import com.example.githubuserfinder.core.presentation.CoreString.HTTP_422_ERROR_MESSAGE
+import com.example.githubuserfinder.core.presentation.CoreString.HTTP_503_ERROR_MESSAGE
+import com.example.githubuserfinder.core.presentation.CoreString.HTTP_UNKNOWN_ERROR_MESSAGE
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -86,13 +91,15 @@ class NetworkRequesterTest {
 
         val result = sut.invoke(mockUrl)
 
+        assertThat(result.exception).isInstanceOf(CustomNetworkException::class.java)
+
         // This condition shall be divided into multiple tests
         when (responseHttpCode) {
-//            304 -> assertThat(result.exception?.message).isEqualTo(HTTP_304_ERROR_MESSAGE)
-//            404 -> assertThat(result.exception?.message).isEqualTo(HTTP_404_ERROR_MESSAGE)
-//            422 -> assertThat(result.exception?.message).isEqualTo(HTTP_422_ERROR_MESSAGE)
-//            503 -> assertThat(result.exception?.message).isEqualTo(HTTP_503_ERROR_MESSAGE)
-//            else -> assertThat(result.exception?.message).isEqualTo(HTTP_UNKNOWN_ERROR_MESSAGE)
+            304 -> assertThat(result.exception?.message).isEqualTo(HTTP_304_ERROR_MESSAGE)
+            404 -> assertThat(result.exception?.message).isEqualTo(HTTP_404_ERROR_MESSAGE)
+            422 -> assertThat(result.exception?.message).isEqualTo(HTTP_422_ERROR_MESSAGE)
+            503 -> assertThat(result.exception?.message).isEqualTo(HTTP_503_ERROR_MESSAGE)
+            else -> assertThat(result.exception?.message).isEqualTo(HTTP_UNKNOWN_ERROR_MESSAGE)
         }
     }
 
@@ -107,7 +114,8 @@ class NetworkRequesterTest {
             mockUrl,
         )
 
-        assertThat(result.exception).isEqualTo(malformedUrlException)
+        assertThat(result.exception).isInstanceOf(CustomNetworkException::class.java)
+        assertThat(result.exception?.message).isEqualTo(malformedUrlException.message)
     }
 
     @Test
@@ -121,7 +129,8 @@ class NetworkRequesterTest {
             mockUrl,
         )
 
-        assertThat(result.exception).isEqualTo(ioException)
+        assertThat(result.exception).isInstanceOf(CustomNetworkException::class.java)
+        assertThat(result.exception?.message).isEqualTo(ioException.message)
     }
 }
 
