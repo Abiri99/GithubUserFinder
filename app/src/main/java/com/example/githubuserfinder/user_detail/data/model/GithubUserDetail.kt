@@ -1,5 +1,8 @@
 package com.example.githubuserfinder.user_detail.data.model
 
+/**
+ * This model contains user's profile data.
+ * */
 data class GithubUserDetail(
     val login: String,
     val avatarUrl: String,

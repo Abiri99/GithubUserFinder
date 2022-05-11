@@ -23,18 +23,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.githubuserfinder.core.presentation.component.NetworkImage
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchItem
+import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UserFinderListItem(
-    model: GithubSearchItem,
+    model: GithubSearchItemModel,
     onItemClicked: (String) -> Unit,
 ) {
+
+    val onClicked: () -> Unit = {
+        onItemClicked(model.login)
+    }
+
     TouchableScale(
-        onClick = {
-            onItemClicked(model.login)
-        },
+        onClick = onClicked,
         modifier = Modifier
             .requiredHeight(86.dp)
             .padding(8.dp),
@@ -52,7 +55,7 @@ fun UserFinderListItem(
                 horizontalArrangement = Arrangement.Start,
             ) {
                 NetworkImage(
-                    url = model.avatarUrl.toString(),
+                    url = model.avatarUrl,
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.requiredSize(48.dp),
                     imageModifier = Modifier

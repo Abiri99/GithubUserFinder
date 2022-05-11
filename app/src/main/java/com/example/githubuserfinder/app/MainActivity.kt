@@ -12,11 +12,11 @@ import com.google.android.gms.security.ProviderInstaller
 
 private const val ERROR_DIALOG_REQUEST_CODE = 1
 
-// Dependencies are created manually in the main activity and injected to the lower layers
+// Dependencies are created manually in the MainActivity and injected to the lower layers
 class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListener {
 
     /**
-     * This is a flag indicating whether the [Provider] needs to be re-installed or not
+     * This is a flag indicating whether the [ProviderInstaller] must re-install the provider or not
      * */
     private var retryProviderInstall: Boolean = false
 
@@ -24,12 +24,12 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
         super.onCreate(savedInstanceState)
 
         if (SecurityUtil.isDeviceRooted()) {
-            // TODO: Instead of closing app show proper message
+            // Instead of closing the app, a proper message must be shown to the user
             finish()
         }
 
         if (!BuildConfig.DEBUG && SecurityUtil.isProbablyRunningOnEmulator) {
-            // TODO: Instead of closing app show proper message
+            // Instead of closing the app, a proper message must be shown to the user
             finish()
         }
 
@@ -87,8 +87,8 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
     }
 
     /**
-     * On resume, check to see if we flagged that we need to reinstall the
-     * provider.
+     * On resume, check to see if we flagged that
+     * we need to reinstall the provider.
      */
     override fun onPostResume() {
         super.onPostResume()
@@ -103,7 +103,7 @@ class MainActivity : ComponentActivity(), ProviderInstaller.ProviderInstallListe
         // App should consider all HTTP communication to be vulnerable, and take
         // appropriate action.
 
-        // TODO: Replace this with a proper action (e.g. Showing a dialog informing user of the problem)
+        // Instead of closing the app, a proper message must be shown to the user
         finish()
     }
 }

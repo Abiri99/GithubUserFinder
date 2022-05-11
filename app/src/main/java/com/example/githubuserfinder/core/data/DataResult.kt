@@ -5,7 +5,8 @@ package com.example.githubuserfinder.core.data
  * It could be [DataResult.Error] in case of the API not succeeding and
  * [DataResult.Success] in case of a successful API call.
  *
- * @param value is of a generic type and is different based on each API
+ * @param value is of a generic type and is different based on each API.
+ * @param exception is the one that the api have thrown.
  * */
 sealed class DataResult<out R>(
     open val value: R? = null,

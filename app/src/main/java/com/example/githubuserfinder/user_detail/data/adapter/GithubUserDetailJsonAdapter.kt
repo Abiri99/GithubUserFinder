@@ -2,10 +2,15 @@ package com.example.githubuserfinder.user_detail.data.adapter
 
 import com.example.githubuserfinder.core.data.JsonAdapter
 import com.example.githubuserfinder.core.data.getStringNullable
+import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
 import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import com.example.githubuserfinder.user_detail.presentation.UserDetailString
 import org.json.JSONObject
 
+/**
+ * This class is used in [UsersRemoteDataSource] and handles
+ * converting a [JSONObject] to a [GithubUserDetail] model.
+ * */
 class GithubUserDetailJsonAdapter : JsonAdapter<GithubUserDetail> {
     override fun createEntityFromJson(json: JSONObject): GithubUserDetail {
         return GithubUserDetail(

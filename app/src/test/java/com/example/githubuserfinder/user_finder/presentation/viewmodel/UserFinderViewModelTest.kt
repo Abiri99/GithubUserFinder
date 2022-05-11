@@ -4,8 +4,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import app.cash.turbine.test
 import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchItem
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
+import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
+import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -34,11 +34,11 @@ class UserFinderViewModelTest {
 
     private lateinit var userFinderViewModel: UserFinderViewModel
 
-    private val mockGithubSearchResponse = GithubSearchResponse(
+    private val mockGithubSearchResponse = GithubSearchResponseModel(
         totalCount = 2,
         incompleteResults = true,
-        items = listOf(
-            GithubSearchItem(
+        itemModels = listOf(
+            GithubSearchItemModel(
                 login = "JakeWharton",
                 id = 66577,
                 avatarUrl = "https://avatars.githubusercontent.com/u/66577?v=4",

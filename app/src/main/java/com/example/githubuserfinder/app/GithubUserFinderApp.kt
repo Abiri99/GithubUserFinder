@@ -21,8 +21,8 @@ import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteData
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
 import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
 
-// As this is a small application, we haven't used dependency injection frameworks
-// Here we've created dependencies manually and injected them to different features
+// As this is a small application, a dependency injection framework isn't used.
+// Dependencies are created in the root of the UI manually and injected to different features.
 @Composable
 fun GithubUserFinderApp() {
 
@@ -52,7 +52,7 @@ fun GithubUserFinderApp() {
     )
 
     /**
-     * This is a callback we must pass to [UserFinderScreen] so that
+     * This callback must be passed to [UserFinderScreen] so that
      * it would be able to navigate to the detail screen
      * */
     val onNavigateToUserDetail: (String) -> Unit = { username ->
@@ -62,7 +62,7 @@ fun GithubUserFinderApp() {
     }
 
     /**
-     * This is a callback we must pass to the screens (excluding [NavHost]'s startDestination)
+     * This is callback must be passed to the screens (excluding [NavHost]'s startDestination)
      * so that they can navigate back to the previous screens
      * */
     val onNavigateBack: () -> Unit = {

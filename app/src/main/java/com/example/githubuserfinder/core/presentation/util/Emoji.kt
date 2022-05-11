@@ -3,12 +3,10 @@ package com.example.githubuserfinder.core.presentation.util
 import io.michaelrocks.paranoid.Obfuscate
 
 /**
- * These are emojis which we can use in the texts
+ * These are emoji codes which are used in the UI.
  * */
 @Obfuscate
 object Emoji {
-
-    val search: String = String(Character.toChars(0x1F50D))
 
     val eye: String =
         String(Character.toChars(0x1F441)) + String(Character.toChars(0xFE0F)) + String(

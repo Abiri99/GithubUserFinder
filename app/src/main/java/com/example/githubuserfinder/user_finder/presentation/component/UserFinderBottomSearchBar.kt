@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
@@ -43,10 +44,16 @@ fun BoxScope.UserFinderBottomSearchBar(
     onSearchedValueChanged: (TextFieldValue) -> Unit,
 ) {
 
+    // This is used to close the keyboard
     val focusManager = LocalFocusManager.current
 
     val (searchInputFocusRequester) = remember { FocusRequester.createRefs() }
 
+    val onKeyboardDonePressed: KeyboardActionScope.() -> Unit = {
+        focusManager.clearFocus()
+    }
+
+    // This supposed to be run only once
     LaunchedEffect(true) {
         searchInputFocusRequester.requestFocus()
     }
@@ -100,9 +107,7 @@ fun BoxScope.UserFinderBottomSearchBar(
                     .requiredHeight(48.dp),
                 singleLine = true,
                 keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                    }
+                    onDone = onKeyboardDonePressed,
                 ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,

@@ -12,6 +12,9 @@ class UsersRemoteDataSourceImpl(
     private val githubUserDetailJsonAdapter: GithubUserDetailJsonAdapter,
 ) : UsersRemoteDataSource {
 
+    /**
+     * @see [UsersRemoteDataSource.getUser]
+     * */
     override suspend fun getUser(username: String): DataResult<GithubUserDetail> {
         val jsonResult =
             networkRequester.invoke(url = URL(UserDetailString.GetUserApiRoute(username)))

@@ -2,7 +2,12 @@ package com.example.githubuserfinder.core.presentation
 
 import androidx.compose.ui.unit.dp
 
+/**
+ * This object holds the data about the UI values
+ * which are used in multiple UI elements
+ * */
 object UiConstant {
 
-    val HEADER_DEFAULT_HEIGHT = 64.dp // According to Material Design 3: https://m3.material.io/components/top-app-bar/specs#e3fd3eba-0444-437c-9a82-071ef03d85b1
+    val HEADER_DEFAULT_HEIGHT =
+        64.dp // According to Material Design 3: https://m3.material.io/components/top-app-bar/specs#e3fd3eba-0444-437c-9a82-071ef03d85b1
 }

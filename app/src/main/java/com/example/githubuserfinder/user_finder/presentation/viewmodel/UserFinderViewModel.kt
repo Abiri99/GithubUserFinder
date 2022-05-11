@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponse
+import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
+import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
@@ -14,12 +15,19 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
+/**
+ * This is a data class that wrapped all of the UI states in the [UserFinderScreen].
+ * All of the fields are immutable so that they wouldn't violate Functional Programming rules.
+ * */
 data class UserFinderUiState(
     val searchedText: TextFieldValue = TextFieldValue(""),
-    val searchResult: DataResult<GithubSearchResponse>? = null,
+    val searchResult: DataResult<GithubSearchResponseModel>? = null,
     val isSearching: Boolean = false,
 )
 
+/**
+ * This class contains all of the [UserFinderScreen] functionalities
+ * */
 class UserFinderViewModel(
     private val searchRemoteDataSource: SearchRemoteDataSource,
 ) : ViewModel() {
@@ -29,8 +37,8 @@ class UserFinderViewModel(
 
     /**
      * This is a reference to the coroutine which handles the request
-     * to the server. Everytime that searchedText updates, we must
-     * cancel the previous job by calling job.cancel()
+     * to the server. Everytime that searchedText updates,the
+     * previous job must be cancelled by calling job.cancel()
      * */
     private var fetchUsersJob: Job? = null
 
@@ -44,6 +52,7 @@ class UserFinderViewModel(
             .collectLatest {
                 fetchUsersJob?.cancel()
                 if (it.searchedText.text.isBlank()) {
+                    // This is the case when user have deleted the searched text. so the ui state must be reset
                     resetUiState()
                 } else {
                     delay(600) // This delay is set, so that the application won't request server on every character user enters
@@ -52,6 +61,9 @@ class UserFinderViewModel(
             }
     }
 
+    /**
+     * This is used to reset the UI state when user have cleared the query text
+     * */
     fun resetUiState() = viewModelScope.launch {
         uiState.emit(
             uiState.value.copy(
@@ -70,7 +82,7 @@ class UserFinderViewModel(
         )
     }
 
-    fun setSearchResult(value: DataResult<GithubSearchResponse>?) = viewModelScope.launch {
+    fun setSearchResult(value: DataResult<GithubSearchResponseModel>?) = viewModelScope.launch {
         uiState.emit(
             uiState.value.copy(
                 searchResult = value,
@@ -86,11 +98,14 @@ class UserFinderViewModel(
         )
     }
 
+    /**
+     * This method requests server to fetch the users whom name contains the [query].
+     * */
     fun fetchUsersWhomNameContains(query: String): Job = viewModelScope.launch {
         setIsSearching(true)
-        ensureActive()
+        ensureActive() // This ensures that the coroutine is not cancelled
         val result = searchRemoteDataSource.fetchUsers(query)
-        ensureActive()
+        ensureActive() // This ensures that the coroutine is not cancelled
         setSearchResult(result)
         setIsSearching(false)
     }

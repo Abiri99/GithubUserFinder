@@ -65,17 +65,9 @@ class NetworkRequester {
                     }
                 }
             } catch (e: MalformedURLException) {
-                if (BuildConfig.DEBUG) {
-                    Log.d(CoreString.NetworkRequesterTag, e.toString())
-                }
-
                 // This exception could be throw when creating URL
                 DataResult.Error(CustomNetworkException(e.message))
             } catch (e: IOException) {
-                if (BuildConfig.DEBUG) {
-                    Log.d(CoreString.NetworkRequesterTag, e.toString())
-                }
-
                 // This exception could be thrown when calling `url.openConnection`
                 DataResult.Error(CustomNetworkException(e.message))
             } finally {

@@ -12,7 +12,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
 
+/**
+ * This composable is used in the [UserDetailScreen]
+ * to show two data in a row spaced evenly
+ * */
 @Composable
 fun UserDetailTableRow(
     former: String,

@@ -2,10 +2,11 @@ package com.example.githubuserfinder.core.presentation
 
 import io.michaelrocks.paranoid.Obfuscate
 
+/**
+ * These are all of the strings used in the core layer and all of them are obfuscated.
+ * */
 @Obfuscate
 object CoreString {
-
-    const val NetworkRequesterTag = "NetworkRequester"
 
     const val IOExceptionMessage = "Internet error!"
     const val MalformedURLExceptionMessage = "Malformed url!\nPlease contact the service provider"

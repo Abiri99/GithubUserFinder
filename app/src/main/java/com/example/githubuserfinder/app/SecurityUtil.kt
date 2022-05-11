@@ -7,10 +7,21 @@ import java.io.InputStreamReader
 
 object SecurityUtil {
 
+    /**
+     * This method is used in the [MainActivity] so that the
+     * application would be prevented from being used if the device is rooted
+     * */
     fun isDeviceRooted(): Boolean {
         return checkRootMethod1() && checkRootMethod2() && checkRootMethod3()
     }
 
+    /**
+     * This value is supposed to inform the app if the application is running
+     * on the emulator or not but it doesn't ensure detecting all emulators
+     *
+     * This method is used in the [MainActivity] so that the
+     * application would be prevented from being used if is running on emulator
+     * */
     val isProbablyRunningOnEmulator: Boolean by lazy {
         // Android SDK emulator
         return@lazy (

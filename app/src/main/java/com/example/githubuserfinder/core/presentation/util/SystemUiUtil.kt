@@ -9,8 +9,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 object SystemUiUtil {
 
     /**
-     * This method will set the status bar and it's icons color
-     * We probably need to call this method for every [NavigationDestination]
+     * This method will set the status bar and it's icon color.
+     * It probably needs to be called this method for every [NavigationDestination]
      * */
     @Composable
     fun ConfigStatusBar(color: Color, useDarkIcons: Boolean = false) {
