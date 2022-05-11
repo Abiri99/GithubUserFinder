@@ -29,10 +29,14 @@ private enum class TouchableScaleState {
 }
 
 /**
- * TouchableScale is a composable which makes it's child to
- * animate it's scale when it is pressed or touched
+ * TouchableScale is a composable which animates
+ * the content scale when it is pressed or touched
  *
- * @param enabled is to handle if the component should respond to touch events
+ * @param onClick is a lambda called after user presses the composable
+ * @param modifier is used to change the composable behaviour and decoration
+ * @param enabled is to handle if the component should be animated and clicked in case of touch events
+ * @param content is a composable to be drawn with TouchableScale's attributes
+ *
  * */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

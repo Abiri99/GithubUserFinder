@@ -9,7 +9,7 @@ import com.example.githubuserfinder.BuildConfig
  * */
 fun Modifier.debugModifier(modifier: Modifier): Modifier {
     return this.then(
-        if (BuildConfig.DEBUG && false) {
+        if (BuildConfig.DEBUG) {
             modifier
         } else {
             Modifier

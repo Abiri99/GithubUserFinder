@@ -58,6 +58,10 @@ fun UserFinderScreen(
         onNavigateToUserDetail(username)
     }
 
+    val onRetriedFetchingData: () -> Unit = {
+        viewModel.fetchUsersWhomNameContains(uiState.searchedText.text)
+    }
+
     // Content
     Box(
         modifier = Modifier
@@ -92,15 +96,15 @@ fun UserFinderScreen(
                 }
                 uiState.searchResult is DataResult.Success -> {
                     val result = uiState.searchResult?.value
-                    if (result != null && result.items.isNotEmpty()) {
+                    if (result != null && result.itemModels.isNotEmpty()) {
                         LazyVerticalGrid(
                             cells = GridCells.Adaptive(180.dp),
                             modifier = Modifier.fillMaxSize(),
                             contentPadding = PaddingValues(16.dp),
                             horizontalArrangement = Arrangement.Center,
                         ) {
-                            items(uiState.searchResult?.value?.items?.size ?: 0) {
-                                val item = uiState.searchResult!!.value!!.items[it]
+                            items(uiState.searchResult?.value?.itemModels?.size ?: 0) {
+                                val item = uiState.searchResult!!.value!!.itemModels[it]
                                 UserFinderListItem(
                                     model = item,
                                     onItemClicked = onItemClicked,
@@ -124,14 +128,12 @@ fun UserFinderScreen(
                     }
                 }
                 uiState.searchResult is DataResult.Error -> {
-                    TouchableScale(onClick = {
-                        viewModel.fetchUsersWhomNameContains(uiState.searchedText.text)
-                    }) {
+                    TouchableScale(onClick = onRetriedFetchingData) {
                         val errorMessage =
                             if (uiState.searchResult?.exception != null) {
                                 ExceptionMessageMapper.getProperMessageForException(uiState.searchResult!!.exception!!)
                             } else {
-                                UserFinderString.FailedToRetrieveDataDefaultMessage
+                                UserFinderString.FailedToFetchDataDefaultMessage
                             }
                         Text(
                             text = errorMessage,
@@ -157,7 +159,5 @@ fun UserFinderScreen(
             searchedValue = uiState.searchedText,
             onSearchedValueChanged = onSearchedValueChanged,
         )
-
-        // User Detail Sheet
     }
 }

@@ -17,6 +17,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,9 +37,40 @@ fun BoxScope.CustomAppBar(
     onNavigateUp: (() -> Unit)? = null,
     isTransparent: Boolean = false,
 ) {
+
+    /**
+     * This will be updated only when [isTransparent] changes
+     * with the help of [derivedStateOf] API
+     */
+    val elevation by remember(isTransparent) {
+        derivedStateOf {
+            if (isTransparent) {
+                0.dp
+            } else {
+                10.dp
+            }
+        }
+    }
+
+    val primaryColor = MaterialTheme.colors.primary
+
+    /**
+     * This will be updated only when [isTransparent] changes
+     * with the help of the [derivedStateOf] API
+     */
+    val backgroundColor by remember(isTransparent) {
+        derivedStateOf {
+            if (isTransparent) {
+                Color.Transparent
+            } else {
+                primaryColor
+            }
+        }
+    }
+
     Card(
-        elevation = if (isTransparent) 0.dp else 10.dp,
-        backgroundColor = if (isTransparent) Color.Transparent else MaterialTheme.colors.primary,
+        elevation = elevation,
+        backgroundColor = backgroundColor,
         modifier = Modifier
             .fillMaxWidth()
             .requiredHeight(HEADER_DEFAULT_HEIGHT)

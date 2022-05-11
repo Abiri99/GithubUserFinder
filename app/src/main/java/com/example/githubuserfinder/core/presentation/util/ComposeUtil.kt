@@ -17,6 +17,11 @@ object ComposeUtil {
      * the background so there will be no UI updates in the background.
      *
      * This will probably lead to a less usage of cpu and battery.
+     *
+     * @param stateFlow is the flow that is going to be collected
+     * @param lifecycle indicates the current lifecycle state
+     * @param minActiveState indicates the lifecycle state in which collecting the [stateFlow] must be resumed
+     *
      * */
     @OptIn(InternalCoroutinesApi::class)
     @Composable

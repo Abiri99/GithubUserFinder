@@ -6,8 +6,8 @@ import java.io.IOException
 import java.net.MalformedURLException
 
 /**
- * This class is used to map data layer exception messages to a
- * proper message which we can show to the user
+ * This object is used to map data layer exception messages to a
+ * proper message which could be shown to the user in the presentation layer.
  * */
 object ExceptionMessageMapper {
 

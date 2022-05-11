@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 
 /**
  * This class is a container for different screens.
- * @param routeTemplate contains a template which we pass to the [NavController.navigate] method
+ * @param routeTemplate contains a template that would be passed to the [NavController.navigate] method
  *
  * Each [NavigationDestination] sub class may override a method called [createRoute] which is an
  * abstraction on top of [routeTemplate].

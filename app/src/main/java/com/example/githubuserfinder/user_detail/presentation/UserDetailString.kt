@@ -1,14 +1,19 @@
 package com.example.githubuserfinder.user_detail.presentation
 
 import com.example.githubuserfinder.core.presentation.util.Emoji
+import io.michaelrocks.paranoid.Obfuscate
 
+/**
+ * These are all of the strings used in the UserDetail feature and all of them are obfuscated.
+ * */
+@Obfuscate
 object UserDetailString {
 
     val GetUserApiRoute: (String) -> String = {
         "https://api.github.com/users/$it"
     }
 
-    val FailedToRetrieveDataErrorMessage =
+    val FailedToFetchDataErrorMessage =
         Emoji.womanFacePalming + Emoji.manFacePalming + "\n" + "Failed to fetch data, tap to " + Emoji.refresh
 
     const val UserDetailLoginKey = "login"

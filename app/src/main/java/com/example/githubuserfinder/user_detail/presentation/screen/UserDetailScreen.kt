@@ -205,7 +205,7 @@ fun UserDetailScreen(
                         if (uiState.value.userData?.exception != null) {
                             ExceptionMessageMapper.getProperMessageForException(uiState.value.userData!!.exception!!)
                         } else {
-                            UserDetailString.FailedToRetrieveDataErrorMessage
+                            UserDetailString.FailedToFetchDataErrorMessage
                         }
                     Text(
                         text = errorMessage,

@@ -6,6 +6,10 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.lang.reflect.Method
 
+/**
+ * This object is used by [SecurityUtil] and stops the app in case it
+ * shows that the application's kernel environment is running on QEMU.
+ * */
 object SystemProperties {
     private var failedUsingReflection = false
     private var getPropMethod: Method? = null

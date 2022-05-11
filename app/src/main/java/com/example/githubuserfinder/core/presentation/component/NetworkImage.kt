@@ -25,12 +25,17 @@ import coil.size.Size
 /**
  * This is a wrapper composable on top of [coil] library to load images from network.
  *
- * Note that [imageModifier] is different from [modifier]
+ * Note that [imageModifier] is different from [modifier].
  *
+ * @param url is the url of the image
  * @param modifier is used for the container of the image
+ * @param contentScale states the way image fills the available space
+ * @param contentDescription is used for accessibility
  * @param imageModifier is used for the image loaded
  * @param errorBuilder is a composable to be shown when image can't be loaded
  * @param loadingBuilder is a composable to be shown when image loading is in progress
+ * @param alignment is used to indicate the alignment of the image
+ *
  * */
 @OptIn(ExperimentalCoilApi::class)
 @Composable
