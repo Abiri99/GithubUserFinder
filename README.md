@@ -11,11 +11,11 @@ used in the app:
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| Primary Color | ![#365479](https://via.placeholder.com/10/365479?text=+) #365479 |
-| Primary Variant Color | ![#2f4858](https://via.placeholder.com/10/2f4858?text=+) #2f4858 |
-| Secondary Color | ![#c6509e](https://via.placeholder.com/10/c6509e?text=+) #c6509e |
-| Secondary Variant Color | ![#f64685](https://via.placeholder.com/10/f64685?text=+) #f64685 |
-| Surface Color | ![#5a5a95](https://via.placeholder.com/10/5a5a95?text=+) #5a5a95 |
+| Primary Color | ![#365479](http://via.placeholder.com/10/365479/365479) #365479 |
+| Primary Variant Color | ![#2f4858](http://via.placeholder.com/10/2f4858/2f4858) #2f4858 |
+| Secondary Color | ![#c6509e](http://via.placeholder.com/10/c6509e/c6509e) #c6509e |
+| Secondary Variant Color | ![#f64685](http://via.placeholder.com/10/f64685/f64685) #f64685 |
+| Surface Color | ![#5a5a95](http://via.placeholder.com/10/5a5a95/5a5a95) #5a5a95 |
 
 ## Download APK
 
