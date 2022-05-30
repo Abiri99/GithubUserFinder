@@ -5,10 +5,6 @@
 You can use this application to search for Github users and view their profile details.
 
 ## Color Palette
-
-Tried to generate a palette based on the ***Payconiq***'s logo color. Here is the result that is
-used in the app:
-
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
 | Primary Color | ![#365479](http://via.placeholder.com/10/365479/365479) #365479 |
