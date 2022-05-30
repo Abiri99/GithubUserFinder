@@ -60,9 +60,9 @@ Taking these flows in the application as an example:
 - When user have searched for a name in the UserFinder screen and before the data is fetched from
   the server, user changes the query.
 - When user have navigated to the UserDetail screen and before the data is fetched from server, user
-  navigates back. The application must cancel fetching data from network. This is what I mean by the
-  term ***Structured Concurrency***.
+  navigates back. The application must cancel fetching data from network.
 
+This is what I mean by the term ***Structured Concurrency***.
 Handled such a case by using ***Kotlin Coroutines*** cancellation APIs.
 
 ## SSL Certificate Pinning
