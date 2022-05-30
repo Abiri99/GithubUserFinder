@@ -1,6 +1,5 @@
 package com.example.githubuserfinder.user_finder.data.adapter
 
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
 import com.google.common.truth.Truth.assertThat
 import org.json.JSONObject
 import org.junit.Before

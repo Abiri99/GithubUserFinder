@@ -1,6 +1,6 @@
-package com.example.githubuserfinder.user_finder.data.model
+package com.example.user_finder.data.model
 
-data class GithubSearchResponseModel(
+internal data class GithubSearchResponseModel(
     val totalCount: Int,
     val incompleteResults: Boolean,
     val itemModels: List<GithubSearchItemModel>,

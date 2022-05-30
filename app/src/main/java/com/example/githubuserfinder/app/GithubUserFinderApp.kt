@@ -14,7 +14,6 @@ import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataS
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSourceImpl
 import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
-import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchItemJsonAdapter
 import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchResponseJsonAdapter
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSourceImpl

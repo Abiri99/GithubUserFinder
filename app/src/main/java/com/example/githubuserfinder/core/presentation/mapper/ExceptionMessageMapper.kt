@@ -1,7 +1,6 @@
 package com.example.githubuserfinder.core.presentation.mapper
 
 import com.example.githubuserfinder.core.presentation.CoreString
-import com.example.githubuserfinder.core.presentation.util.Emoji
 import java.io.IOException
 import java.net.MalformedURLException
 

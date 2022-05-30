@@ -1,10 +1,8 @@
-package com.example.githubuserfinder.user_finder.data.datasource
+package com.example.user_finder.data.datasource
 
-import com.example.githubuserfinder.core.data.DataResult
-import com.example.githubuserfinder.core.data.NetworkRequester
-import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchResponseJsonAdapter
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
-import com.example.githubuserfinder.user_finder.presentation.UserFinderString
+import com.example.user_finder.data.adapter.GithubSearchResponseJsonAdapter
+import com.example.user_finder.data.model.GithubSearchResponseModel
+import com.example.user_finder.presentation.UiString
 import java.net.URL
 
 class SearchRemoteDataSourceImpl(
@@ -17,7 +15,7 @@ class SearchRemoteDataSourceImpl(
      * */
     override suspend fun fetchUsers(query: String): DataResult<GithubSearchResponseModel> {
         val jsonResult = networkRequester
-            .invoke(url = URL(UserFinderString.FetchUsersRoute(query)))
+            .invoke(url = URL(UiString.FetchUsersRoute(query)))
 
         return when (jsonResult) {
             is DataResult.Success -> {

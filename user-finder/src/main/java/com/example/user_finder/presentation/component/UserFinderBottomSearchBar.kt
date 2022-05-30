@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.user_finder.presentation.component
+package com.example.user_finder.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
@@ -35,11 +35,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.user_finder.presentation.UserFinderString
+import com.example.user_finder.presentation.UiString
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun BoxScope.UserFinderBottomSearchBar(
+internal fun BoxScope.UserFinderBottomSearchBar(
     searchedValue: TextFieldValue,
     onSearchedValueChanged: (TextFieldValue) -> Unit,
 ) {
@@ -93,7 +93,7 @@ fun BoxScope.UserFinderBottomSearchBar(
                 onValueChange = onSearchedValueChanged,
                 placeholder = {
                     Text(
-                        text = UserFinderString.StartSearching,
+                        text = UiString.StartSearching,
                         style = MaterialTheme.typography.caption.copy(
                             color = Color.White.copy(0.6f),
                         ),

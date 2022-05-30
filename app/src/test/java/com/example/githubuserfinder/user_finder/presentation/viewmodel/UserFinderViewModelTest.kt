@@ -2,9 +2,7 @@ package com.example.githubuserfinder.user_finder.presentation.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
 import app.cash.turbine.test
-import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.DelicateCoroutinesApi

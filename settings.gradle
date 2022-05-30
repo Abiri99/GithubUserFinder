@@ -16,3 +16,4 @@ rootProject.name = "GithubUserFinder"
 include ':app'
 include ':user-finder'
 include ':core-android'
+include ':core'

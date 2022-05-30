@@ -1,5 +1,3 @@
-package com.example.githubuserfinder.core.data
-
 /**
  * This is a type defined to wrap the data returned from API calls.
  * It could be [DataResult.Error] in case of the API not succeeding and
@@ -8,7 +6,7 @@ package com.example.githubuserfinder.core.data
  * @param value is of a generic type and is different based on each API.
  * @param exception is the one that the api have thrown.
  * */
-sealed class DataResult<out R>(
+public sealed class DataResult<out R>(
     open val value: R? = null,
     open val exception: Exception? = null,
 ) {

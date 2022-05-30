@@ -1,10 +1,8 @@
-package com.example.githubuserfinder.user_finder.presentation.viewmodel
+package com.example.user_finder.presentation.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
@@ -17,7 +15,7 @@ import kotlinx.coroutines.launch
  * This is a data class that wrapped all of the UI states in the [UserFinderScreen].
  * All of the fields are immutable so that they wouldn't violate Functional Programming rules.
  * */
-data class UserFinderUiState(
+private data class UserFinderUiState(
     val searchedText: TextFieldValue = TextFieldValue(""),
     val searchResult: DataResult<GithubSearchResponseModel>? = null,
     val isSearching: Boolean = false,
@@ -26,7 +24,7 @@ data class UserFinderUiState(
 /**
  * This class contains all of the [UserFinderScreen] functionalities
  * */
-class UserFinderViewModel(
+internal class UserFinderViewModel(
     private val searchRemoteDataSource: SearchRemoteDataSource,
 ) : ViewModel() {
 

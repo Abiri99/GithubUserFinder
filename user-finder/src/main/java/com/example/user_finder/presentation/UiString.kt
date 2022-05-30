@@ -1,12 +1,13 @@
-package com.example.githubuserfinder.user_finder.presentation
+package com.example.user_finder.presentation
 
+import com.example.core_android.presentation.Emoji
 import io.michaelrocks.paranoid.Obfuscate
 
 /**
  * These are all of the strings used in the UserFinder feature and all of them are obfuscated.
  * */
 @Obfuscate
-object UserFinderString {
+internal object UiString {
     const val AppBarTitle = "Github User Finder"
     val InitialScreenMessage = "Let's " + Emoji.eye + " Github users " + Emoji.blackCat
     val FailedToFetchDataDefaultMessage =

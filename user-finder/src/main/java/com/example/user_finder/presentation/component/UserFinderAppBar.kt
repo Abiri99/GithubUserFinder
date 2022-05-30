@@ -30,7 +30,7 @@ import com.example.core_android.presentation.component.TouchableScale
 
 @OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
-fun BoxScope.CustomAppBar(
+internal fun BoxScope.UserFinderAppBar(
     title: String,
     onNavigateUp: (() -> Unit)? = null,
     isTransparent: Boolean = false,

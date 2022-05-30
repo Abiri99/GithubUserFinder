@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.user_finder.presentation.component
+package com.example.user_finder.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,13 +20,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.presentation.component.NetworkImage
-import com.example.githubuserfinder.core.presentation.component.TouchableScale
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
+import com.example.core_android.presentation.component.NetworkImage
+import com.example.core_android.presentation.component.TouchableScale
+import com.example.user_finder.data.model.GithubSearchItemModel
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun UserFinderListItem(
+internal fun UserFinderListItem(
     model: GithubSearchItemModel,
     onItemClicked: (String) -> Unit,
 ) {

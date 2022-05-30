@@ -29,11 +29,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.core.presentation.component.NetworkImage
 import com.example.githubuserfinder.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
-import com.example.githubuserfinder.core.presentation.util.ComposeUtil
 import com.example.githubuserfinder.user_detail.presentation.UserDetailString
 import com.example.githubuserfinder.user_detail.presentation.component.UserDetailTableRow
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel

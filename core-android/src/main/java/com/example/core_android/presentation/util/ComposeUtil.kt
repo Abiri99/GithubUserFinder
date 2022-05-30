@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.presentation.util
+package com.example.core_android.presentation.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -6,9 +6,8 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
+import androidx.lifecycle.repeatOnLifecycle
 
 object ComposeUtil {
 
@@ -23,7 +22,6 @@ object ComposeUtil {
      * @param minActiveState indicates the lifecycle state in which collecting the [stateFlow] must be resumed
      *
      * */
-    @OptIn(InternalCoroutinesApi::class)
     @Composable
     fun <T> rememberStateWithLifecycle(
         stateFlow: StateFlow<T>,

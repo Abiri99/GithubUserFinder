@@ -1,13 +1,14 @@
-package com.example.githubuserfinder.user_finder.data.adapter
+package com.example.user_finder.data.adapter
 
-import com.example.githubuserfinder.core.data.JsonAdapter
-import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
+import com.example.core_android.data.JsonAdapter
+import com.example.user_finder.data.model.GithubSearchItemModel
+import com.example.user_finder.data.model.GithubSearchResponseModel
 import org.json.JSONObject
 
 /**
  * This class will handle converting a [JSONObject] to a [GithubSearchResponseModel] model
  * */
-class GithubSearchResponseJsonAdapter(
+internal class GithubSearchResponseJsonAdapter(
     private val githubSearchItemJsonAdapter: GithubSearchItemJsonAdapter,
 ) : JsonAdapter<GithubSearchResponseModel> {
     override fun createEntityFromJson(json: JSONObject): GithubSearchResponseModel {
@@ -15,7 +16,13 @@ class GithubSearchResponseJsonAdapter(
         val parsedItemModels: MutableList<GithubSearchItemModel> = mutableListOf()
 
         for (i in 0 until items.length()) {
-            parsedItemModels.add(githubSearchItemJsonAdapter.createEntityFromJson(items.getJSONObject(i)))
+            parsedItemModels.add(
+                githubSearchItemJsonAdapter.createEntityFromJson(
+                    items.getJSONObject(
+                        i
+                    )
+                )
+            )
         }
 
         return GithubSearchResponseModel(

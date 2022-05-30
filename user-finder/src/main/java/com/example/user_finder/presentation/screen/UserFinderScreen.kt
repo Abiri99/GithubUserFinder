@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.user_finder.presentation.screen
+package com.example.user_finder.presentation.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -23,20 +23,31 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.data.DataResult
-import com.example.githubuserfinder.core.presentation.component.TouchableScale
-import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
-import com.example.githubuserfinder.core.presentation.util.ComposeUtil
-import com.example.githubuserfinder.core.presentation.util.SystemUiUtil
-import com.example.githubuserfinder.user_finder.presentation.UserFinderString
-import com.example.githubuserfinder.user_finder.presentation.component.CustomAppBar
-import com.example.githubuserfinder.user_finder.presentation.component.UserFinderBottomSearchBar
-import com.example.githubuserfinder.user_finder.presentation.component.UserFinderListItem
-import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
+import com.example.core_android.presentation.component.TouchableScale
+import com.example.core_android.presentation.util.ComposeUtil
+import com.example.core_android.presentation.util.SystemUiUtil
+import com.example.user_finder.presentation.UiString
+import com.example.user_finder.presentation.component.UserFinderAppBar
+import com.example.user_finder.presentation.component.UserFinderBottomSearchBar
+import com.example.user_finder.presentation.component.UserFinderListItem
+import com.example.user_finder.presentation.viewmodel.UserFinderViewModel
+
+@Composable
+fun UserFinderScreen(
+    onNavigateToUserDetail: (String) -> Unit,
+) {
+
+    val searchRemoteDataSource = SearchRemoteDataSource()
+
+    UserFinderScreen(
+        viewModel = UserFinderViewModel(),
+        onNavigateToUserDetail = onNavigateToUserDetail,
+    )
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun UserFinderScreen(
+private fun UserFinderScreen(
     viewModel: UserFinderViewModel,
     onNavigateToUserDetail: (String) -> Unit,
 ) {
@@ -85,7 +96,7 @@ fun UserFinderScreen(
                 }
                 uiState.searchResult == null -> {
                     Text(
-                        text = UserFinderString.InitialScreenMessage,
+                        text = UiString.InitialScreenMessage,
                         style = MaterialTheme.typography.h6,
                         color = Color.Black,
                         textAlign = TextAlign.Center,
@@ -117,7 +128,7 @@ fun UserFinderScreen(
                         }
                     } else {
                         Text(
-                            text = UserFinderString.NoResultMessage,
+                            text = UiString.NoResultMessage,
                             style = MaterialTheme.typography.h6,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
@@ -133,7 +144,7 @@ fun UserFinderScreen(
                             if (uiState.searchResult?.exception != null) {
                                 ExceptionMessageMapper.getProperMessageForException(uiState.searchResult!!.exception!!)
                             } else {
-                                UserFinderString.FailedToFetchDataDefaultMessage
+                                UiString.FailedToFetchDataDefaultMessage
                             }
                         Text(
                             text = errorMessage,
@@ -150,8 +161,8 @@ fun UserFinderScreen(
         }
 
         // App Bar
-        CustomAppBar(
-            title = UserFinderString.AppBarTitle,
+        UserFinderAppBar(
+            title = UiString.AppBarTitle,
         )
 
         // Bottom Search Bar

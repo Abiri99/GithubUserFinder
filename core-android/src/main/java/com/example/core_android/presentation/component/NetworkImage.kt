@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.presentation.component
+package com.example.core_android.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -37,7 +36,6 @@ import coil.size.Size
  * @param alignment is used to indicate the alignment of the image
  *
  * */
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun NetworkImage(
     url: String,

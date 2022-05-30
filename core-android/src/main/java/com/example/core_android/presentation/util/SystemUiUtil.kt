@@ -1,9 +1,8 @@
-package com.example.githubuserfinder.core.presentation.util
+package com.example.core_android.presentation.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import com.example.githubuserfinder.app.navigation.NavigationDestination
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 object SystemUiUtil {
