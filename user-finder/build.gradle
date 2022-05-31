@@ -44,5 +44,5 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
 
     implementation project(path: ':core-android')
-    implementation project(path: ':core')
+    implementation ':core'
 }
