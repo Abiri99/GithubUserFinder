@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.data
+package com.example.core.data
 
 /**
  * This is a type defined to wrap the data returned from API calls.

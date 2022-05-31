@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.data
+package com.example.core.data
 
 /**
  * This is a custom exception type used in the [NetworkRequester] so that

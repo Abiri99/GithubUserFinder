@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.presentation.component
+package com.example.core.presentation.component
 
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring

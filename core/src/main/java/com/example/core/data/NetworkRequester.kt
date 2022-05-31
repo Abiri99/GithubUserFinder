@@ -1,8 +1,6 @@
-package com.example.githubuserfinder.core.data
+package com.example.core.data
 
-import android.util.Log
-import com.example.githubuserfinder.BuildConfig
-import com.example.githubuserfinder.core.presentation.CoreString
+import com.example.core.presentation.CoreString
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable

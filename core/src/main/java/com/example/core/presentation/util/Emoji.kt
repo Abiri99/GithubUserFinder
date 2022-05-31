@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.presentation.util
+package com.example.core.presentation.util
 
 import io.michaelrocks.paranoid.Obfuscate
 

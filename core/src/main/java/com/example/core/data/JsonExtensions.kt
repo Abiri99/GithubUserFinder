@@ -1,4 +1,4 @@
-package com.example.githubuserfinder.core.data
+package com.example.core.data
 
 import org.json.JSONObject
 
