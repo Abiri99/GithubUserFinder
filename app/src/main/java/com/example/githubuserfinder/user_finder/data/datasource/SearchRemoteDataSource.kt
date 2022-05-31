@@ -1,6 +1,6 @@
 package com.example.githubuserfinder.user_finder.data.datasource
 
-import com.example.githubuserfinder.core.data.DataResult
+import com.example.core.data.DataResult
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
 
 interface SearchRemoteDataSource {

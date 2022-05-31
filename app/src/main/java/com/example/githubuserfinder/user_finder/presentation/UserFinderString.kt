@@ -1,6 +1,6 @@
 package com.example.githubuserfinder.user_finder.presentation
 
-import com.example.githubuserfinder.core.presentation.util.Emoji
+import com.example.core.presentation.util.Emoji
 import io.michaelrocks.paranoid.Obfuscate
 
 /**

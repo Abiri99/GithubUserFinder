@@ -1,6 +1,6 @@
 package com.example.githubuserfinder.user_detail.data.datasource
 
-import com.example.githubuserfinder.core.data.DataResult
+import com.example.core.data.DataResult
 import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 
 interface UsersRemoteDataSource {

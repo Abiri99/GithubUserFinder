@@ -23,11 +23,11 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.data.DataResult
-import com.example.githubuserfinder.core.presentation.component.TouchableScale
-import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
-import com.example.githubuserfinder.core.presentation.util.ComposeUtil
-import com.example.githubuserfinder.core.presentation.util.SystemUiUtil
+import com.example.core.data.DataResult
+import com.example.core.presentation.component.TouchableScale
+import com.example.core.presentation.mapper.ExceptionMessageMapper
+import com.example.core.presentation.util.ComposeUtil
+import com.example.core.presentation.util.SystemUiUtil
 import com.example.githubuserfinder.user_finder.presentation.UserFinderString
 import com.example.githubuserfinder.user_finder.presentation.component.CustomAppBar
 import com.example.githubuserfinder.user_finder.presentation.component.UserFinderBottomSearchBar
@@ -94,7 +94,7 @@ fun UserFinderScreen(
                             .padding(horizontal = 24.dp),
                     )
                 }
-                uiState.searchResult is DataResult.Success -> {
+                uiState.searchResult is DataResult.Success<*> -> {
                     val result = uiState.searchResult?.value
                     if (result != null && result.itemModels.isNotEmpty()) {
                         LazyVerticalGrid(

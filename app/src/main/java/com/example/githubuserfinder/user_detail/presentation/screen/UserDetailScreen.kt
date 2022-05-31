@@ -29,11 +29,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.data.DataResult
-import com.example.githubuserfinder.core.presentation.component.NetworkImage
-import com.example.githubuserfinder.core.presentation.component.TouchableScale
-import com.example.githubuserfinder.core.presentation.mapper.ExceptionMessageMapper
-import com.example.githubuserfinder.core.presentation.util.ComposeUtil
+import com.example.core.data.DataResult
+import com.example.core.presentation.component.NetworkImage
+import com.example.core.presentation.component.TouchableScale
+import com.example.core.presentation.mapper.ExceptionMessageMapper
+import com.example.core.presentation.util.ComposeUtil
 import com.example.githubuserfinder.user_detail.presentation.UserDetailString
 import com.example.githubuserfinder.user_detail.presentation.component.UserDetailTableRow
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
@@ -80,7 +80,7 @@ fun UserDetailScreen(
                     strokeWidth = 4.dp,
                 )
             }
-            uiState.value.userData is DataResult.Success -> {
+            uiState.value.userData is DataResult.Success<*> -> {
                 val data = uiState.value.userData!!.value!!
 
                 NetworkImage(
@@ -176,9 +176,9 @@ fun UserDetailScreen(
                         latter = UserDetailString.TwitterUserName(data.twitterUsername),
                     )
 
-                    data.bio?.let { bio ->
+                    if (data.bio != null) {
                         Text(
-                            text = UserDetailString.Bio(bio),
+                            text = UserDetailString.Bio(data.bio),
                             style = MaterialTheme.typography.body2.copy(
                                 color = MaterialTheme.colors.onSurface,
                             ),

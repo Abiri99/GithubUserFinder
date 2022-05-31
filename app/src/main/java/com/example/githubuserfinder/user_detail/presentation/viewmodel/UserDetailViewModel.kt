@@ -2,7 +2,7 @@ package com.example.githubuserfinder.user_detail.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubuserfinder.core.data.DataResult
+import com.example.core.data.DataResult
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
 import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen

@@ -20,15 +20,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.example.githubuserfinder.core.presentation.UiConstant.HEADER_DEFAULT_HEIGHT
-import com.example.githubuserfinder.core.presentation.component.TouchableScale
+import com.example.core.presentation.UiConstant.HEADER_DEFAULT_HEIGHT
+import com.example.core.presentation.component.TouchableScale
 
 @OptIn(ExperimentalAnimationApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable

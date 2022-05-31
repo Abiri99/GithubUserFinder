@@ -6,9 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.core.data.NetworkRequester
 import com.example.githubuserfinder.app.navigation.NavArgs
 import com.example.githubuserfinder.app.navigation.NavigationDestination
-import com.example.githubuserfinder.core.data.NetworkRequester
 import com.example.githubuserfinder.user_detail.data.adapter.GithubUserDetailJsonAdapter
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSourceImpl

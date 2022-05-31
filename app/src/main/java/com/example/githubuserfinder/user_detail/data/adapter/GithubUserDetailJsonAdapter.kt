@@ -1,7 +1,7 @@
 package com.example.githubuserfinder.user_detail.data.adapter
 
-import com.example.githubuserfinder.core.data.JsonAdapter
-import com.example.githubuserfinder.core.data.getStringNullable
+import com.example.core.data.JsonAdapter
+import com.example.core.data.getStringNullable
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
 import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import com.example.githubuserfinder.user_detail.presentation.UserDetailString

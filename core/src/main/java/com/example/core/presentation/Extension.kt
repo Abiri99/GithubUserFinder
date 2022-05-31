@@ -1,7 +1,7 @@
 package com.example.core.presentation
 
 import androidx.compose.ui.Modifier
-import com.example.githubuserfinder.BuildConfig
+import com.example.core.BuildConfig
 
 /**
  * This extension function will set a modifier only

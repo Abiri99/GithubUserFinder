@@ -21,11 +21,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.githubuserfinder.core.presentation.component.NetworkImage
-import com.example.githubuserfinder.core.presentation.component.TouchableScale
+import com.example.core.presentation.component.NetworkImage
+import com.example.core.presentation.component.TouchableScale
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UserFinderListItem(
     model: GithubSearchItemModel,

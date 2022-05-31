@@ -1,7 +1,7 @@
 package com.example.githubuserfinder.user_finder.data.datasource
 
-import com.example.githubuserfinder.core.data.DataResult
-import com.example.githubuserfinder.core.data.NetworkRequester
+import com.example.core.data.DataResult
+import com.example.core.data.NetworkRequester
 import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchResponseJsonAdapter
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
 import com.example.githubuserfinder.user_finder.presentation.UserFinderString

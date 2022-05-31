@@ -1,6 +1,6 @@
 package com.example.githubuserfinder.user_finder.data.adapter
 
-import com.example.githubuserfinder.core.data.JsonAdapter
+import com.example.core.data.JsonAdapter
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
 import com.example.githubuserfinder.user_finder.presentation.UserFinderString
 import org.json.JSONObject
