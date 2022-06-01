@@ -10,11 +10,11 @@ import com.example.core.data.NetworkRequester
 import com.example.githubuserfinder.app.navigation.NavArgs
 import com.example.githubuserfinder.app.navigation.NavigationDestination
 import com.example.githubuserfinder.app.navigation.ScreenName.UserFinderScreen
-import com.example.githubuserfinder.user_detail.data.adapter.GithubUserDetailJsonAdapter
-import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
-import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSourceImpl
-import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
-import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
+import com.example.user_detail.data.adapter.GithubUserDetailJsonAdapter
+import com.example.user_detail.data.datasource.UsersRemoteDataSource
+import com.example.user_detail.data.datasource.UsersRemoteDataSourceImpl
+import com.example.user_detail.presentation.screen.UserDetailScreen
+import com.example.user_detail.presentation.viewmodel.UserDetailViewModel
 import com.example.user_finder.data.adapter.GithubSearchItemJsonAdapter
 import com.example.user_finder.data.adapter.GithubSearchResponseJsonAdapter
 import com.example.user_finder.data.datasource.SearchRemoteDataSource

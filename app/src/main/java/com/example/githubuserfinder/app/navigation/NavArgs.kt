@@ -1,6 +1,5 @@
 package com.example.githubuserfinder.app.navigation
 
-import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
 import io.michaelrocks.paranoid.Obfuscate
 
 /**
