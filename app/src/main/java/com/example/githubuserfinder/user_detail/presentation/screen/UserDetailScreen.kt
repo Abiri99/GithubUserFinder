@@ -37,7 +37,7 @@ import com.example.core.presentation.util.ComposeUtil
 import com.example.githubuserfinder.user_detail.presentation.UserDetailString
 import com.example.githubuserfinder.user_detail.presentation.component.UserDetailTableRow
 import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
-import com.example.githubuserfinder.user_finder.presentation.component.CustomAppBar
+import com.example.user_finder.presentation.component.CustomAppBar
 
 @Composable
 fun UserDetailScreen(
