@@ -16,3 +16,4 @@ rootProject.name = "GithubUserFinder"
 include ':app'
 include ':core'
 include ':user-finder'
+include ':user-detail'
