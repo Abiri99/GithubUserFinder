@@ -6,8 +6,9 @@ import com.example.githubuserfinder.user_detail.data.adapter.GithubUserDetailJso
 import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import com.example.githubuserfinder.user_detail.presentation.UserDetailString
 import java.net.URL
+import javax.inject.Inject
 
-class UsersRemoteDataSourceImpl(
+class UsersRemoteDataSourceImpl @Inject constructor(
     private val networkRequester: NetworkRequester,
     private val githubUserDetailJsonAdapter: GithubUserDetailJsonAdapter,
 ) : UsersRemoteDataSource {

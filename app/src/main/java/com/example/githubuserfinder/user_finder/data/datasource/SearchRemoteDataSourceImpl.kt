@@ -6,8 +6,9 @@ import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchRespons
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
 import com.example.githubuserfinder.user_finder.presentation.UserFinderString
 import java.net.URL
+import javax.inject.Inject
 
-class SearchRemoteDataSourceImpl(
+class SearchRemoteDataSourceImpl @Inject constructor(
     private val networkRequester: NetworkRequester,
     private val githubSearchResponseJsonAdapter: GithubSearchResponseJsonAdapter,
 ) : SearchRemoteDataSource {

@@ -8,18 +8,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.githubuserfinder.app.navigation.NavArgs
 import com.example.githubuserfinder.app.navigation.NavigationDestination
-import com.example.githubuserfinder.core.data.NetworkRequester
-import com.example.githubuserfinder.user_detail.data.adapter.GithubUserDetailJsonAdapter
-import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
-import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSourceImpl
+import com.example.githubuserfinder.core.di.daggerViewModel
+import com.example.githubuserfinder.user_detail.di.DaggerUserDetailComponent
 import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
-import com.example.githubuserfinder.user_detail.presentation.viewmodel.UserDetailViewModel
-import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchItemJsonAdapter
-import com.example.githubuserfinder.user_finder.data.adapter.GithubSearchResponseJsonAdapter
-import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
-import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSourceImpl
+import com.example.githubuserfinder.user_finder.di.DaggerUserFinderComponent
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
-import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinderViewModel
 
 // As this is a small application, a dependency injection framework isn't used.
 // Dependencies are created in the root of the UI manually and injected to different features.
@@ -27,29 +20,6 @@ import com.example.githubuserfinder.user_finder.presentation.viewmodel.UserFinde
 fun GithubUserFinderApp() {
 
     val navController = rememberNavController()
-
-    // Dependencies
-    val networkRequester = NetworkRequester()
-    val githubSearchItemJsonAdapter = GithubSearchItemJsonAdapter()
-    val githubSearchResponseJsonAdapter =
-        GithubSearchResponseJsonAdapter(githubSearchItemJsonAdapter = githubSearchItemJsonAdapter)
-    val githubUserDetailJsonAdapter = GithubUserDetailJsonAdapter()
-    val searchRemoteDataSource: SearchRemoteDataSource =
-        SearchRemoteDataSourceImpl(
-            networkRequester = networkRequester,
-            githubSearchResponseJsonAdapter = githubSearchResponseJsonAdapter,
-        )
-    val usersRemoteDataSource: UsersRemoteDataSource =
-        UsersRemoteDataSourceImpl(
-            networkRequester = networkRequester,
-            githubUserDetailJsonAdapter = githubUserDetailJsonAdapter,
-        )
-    val userFinderViewModel = UserFinderViewModel(
-        searchRemoteDataSource = searchRemoteDataSource,
-    )
-    val userDetailViewModel = UserDetailViewModel(
-        usersRemoteDataSource = usersRemoteDataSource,
-    )
 
     /**
      * This callback must be passed to [UserFinderScreen] so that
@@ -76,6 +46,11 @@ fun GithubUserFinderApp() {
         composable(
             route = NavigationDestination.UserFinderNavigationDestination.routeTemplate,
         ) {
+            val userFinderComponent = DaggerUserFinderComponent.builder().build()
+            val userFinderViewModel = daggerViewModel {
+                userFinderComponent.getViewModel()
+            }
+
             UserFinderScreen(
                 viewModel = userFinderViewModel,
                 onNavigateToUserDetail = onNavigateToUserDetail,
@@ -91,6 +66,11 @@ fun GithubUserFinderApp() {
                 }
             ),
         ) { entry ->
+            val userDetailComponent = DaggerUserDetailComponent.builder().build()
+            val userDetailViewModel = daggerViewModel {
+                userDetailComponent.getViewModel()
+            }
+
             val username = entry.arguments?.getString(NavArgs.Username)
             UserDetailScreen(
                 viewModel = userDetailViewModel,

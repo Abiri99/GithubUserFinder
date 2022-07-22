@@ -6,6 +6,7 @@ import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
 import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import com.example.githubuserfinder.user_detail.presentation.screen.UserDetailScreen
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +24,7 @@ data class UserDetailUiState(
 /**
  * This class contains all of the [UserDetailScreen] functionalities
  * */
-class UserDetailViewModel(
+class UserDetailViewModel @Inject constructor(
     private val usersRemoteDataSource: UsersRemoteDataSource
 ) : ViewModel() {
 

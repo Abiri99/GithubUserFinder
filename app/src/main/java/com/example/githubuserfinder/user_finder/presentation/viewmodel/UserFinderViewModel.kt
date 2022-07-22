@@ -7,6 +7,7 @@ import com.example.githubuserfinder.core.data.DataResult
 import com.example.githubuserfinder.user_finder.data.datasource.SearchRemoteDataSource
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
 import com.example.githubuserfinder.user_finder.presentation.screen.UserFinderScreen
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
@@ -28,7 +29,7 @@ data class UserFinderUiState(
 /**
  * This class contains all of the [UserFinderScreen] functionalities
  * */
-class UserFinderViewModel(
+class UserFinderViewModel @Inject constructor(
     private val searchRemoteDataSource: SearchRemoteDataSource,
 ) : ViewModel() {
 

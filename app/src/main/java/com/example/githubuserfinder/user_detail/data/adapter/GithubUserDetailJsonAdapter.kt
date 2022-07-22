@@ -5,13 +5,14 @@ import com.example.githubuserfinder.core.data.getStringNullable
 import com.example.githubuserfinder.user_detail.data.datasource.UsersRemoteDataSource
 import com.example.githubuserfinder.user_detail.data.model.GithubUserDetail
 import com.example.githubuserfinder.user_detail.presentation.UserDetailString
+import javax.inject.Inject
 import org.json.JSONObject
 
 /**
  * This class is used in [UsersRemoteDataSource] and handles
  * converting a [JSONObject] to a [GithubUserDetail] model.
  * */
-class GithubUserDetailJsonAdapter : JsonAdapter<GithubUserDetail> {
+class GithubUserDetailJsonAdapter @Inject constructor() : JsonAdapter<GithubUserDetail> {
     override fun createEntityFromJson(json: JSONObject): GithubUserDetail {
         return GithubUserDetail(
             login = json.getString(UserDetailString.UserDetailLoginKey),
