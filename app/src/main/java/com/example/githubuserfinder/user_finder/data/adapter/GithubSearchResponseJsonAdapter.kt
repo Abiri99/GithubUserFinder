@@ -3,12 +3,13 @@ package com.example.githubuserfinder.user_finder.data.adapter
 import com.example.githubuserfinder.core.data.JsonAdapter
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchItemModel
 import com.example.githubuserfinder.user_finder.data.model.GithubSearchResponseModel
+import javax.inject.Inject
 import org.json.JSONObject
 
 /**
  * This class will handle converting a [JSONObject] to a [GithubSearchResponseModel] model
  * */
-class GithubSearchResponseJsonAdapter(
+class GithubSearchResponseJsonAdapter @Inject constructor(
     private val githubSearchItemJsonAdapter: GithubSearchItemJsonAdapter,
 ) : JsonAdapter<GithubSearchResponseModel> {
     override fun createEntityFromJson(json: JSONObject): GithubSearchResponseModel {

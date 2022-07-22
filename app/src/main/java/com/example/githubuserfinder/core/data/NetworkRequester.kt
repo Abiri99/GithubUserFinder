@@ -1,7 +1,5 @@
 package com.example.githubuserfinder.core.data
 
-import android.util.Log
-import com.example.githubuserfinder.BuildConfig
 import com.example.githubuserfinder.core.presentation.CoreString
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +13,7 @@ import java.io.InputStream
 import java.net.MalformedURLException
 import java.net.URL
 import java.nio.charset.StandardCharsets
+import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
 
 /**
@@ -23,7 +22,7 @@ import javax.net.ssl.HttpsURLConnection
  *  - Handles exceptions
  *  - Returns a [DataResult] of type [JSONObject]
  * */
-class NetworkRequester {
+class NetworkRequester @Inject constructor() {
 
     suspend fun invoke(
         url: URL,
